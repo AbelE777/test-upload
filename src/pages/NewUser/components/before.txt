@@ -1,0 +1,57 @@
+{/* CORREO */}
+      {/* <div className="flex">
+        <div className="relative w-full ml-2 mb-3">
+          <CustomInput
+            autofocus={false}
+            type="text"
+            errors={errors}
+            register={register}
+            name="email"
+            label="Correo *"
+            rules={{
+              required: "Este campo es obligatorio",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "invalid email address",
+              },
+            }}
+          />
+        </div>
+      </div>
+      {errors["email"] && (
+        <div className="-mt-3">
+          <FormErrorMessage>
+            {errors["email"]?.message?.toString()}
+          </FormErrorMessage>
+        </div>
+      )} */}
+
+
+
+{/* DIRECCION */}
+      {/* <div className="flex">
+        <div className="relative w-full ml-2 mb-3">
+          <CustomInput
+            autofocus={false}
+            type="text"
+            errors={errors}
+            register={register}
+            name="direccion"
+            label="Dirección *"
+            rules={{
+              minLength: {
+                value: 10,
+                message: "Dirección debe contener al menos 10 caracteres",
+              },
+              required: "Este campo es obligatorio",
+            }}
+          />
+        </div>
+      </div>
+      {errors["direccion"] && (
+        <div className="-mt-3">
+          <FormErrorMessage>
+            {errors["direccion"]?.message?.toString()}
+          </FormErrorMessage>
+        </div>
+      )} */}      

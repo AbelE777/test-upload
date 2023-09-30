@@ -1,0 +1,6 @@
+export * from './validadorCedula'
+export * from './authUtils'
+export * from './getFromPath'
+export * from './setTableHeight'
+export * from './quitarTildes'
+export * from './aplanarDatosCliente'

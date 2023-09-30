@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+#root {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding: 0rem;
+  text-align: center;
+  /* height: 100vh; */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
+}
+@media (min-width: 640px) {
+  table {
+    display: inline-table !important;
+  }
+
+  thead tr:not(:first-child) {
+    display: none;
+  }
+}
+
+td:not(:last-child) {
+  border-bottom: 0;
+}
+
+th:not(:last-child) {
+  border-bottom: 2px solid rgba(0, 0, 0, .1);
+}
