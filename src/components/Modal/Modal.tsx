@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Input,
 } from "@material-tailwind/react";
 import { IModalData } from "../../types";
 import moment from "moment";
@@ -54,74 +55,99 @@ export default function Modal({ modalConfig, setModalConfig }: Props) {
           unmount: { scale: 0.9, y: -100 },
         }}
         className="dark:bg-gray-900"
+        size="lg"
       >
         <DialogHeader className="dark:text-gray-300 text-gray-800 font-normal">
-          Detalles {nombres}
+          {nombres}
         </DialogHeader>
         <DialogBody divider>
           <div className="md:flex">
-            <div className="md:w-1/2">
-              <img src={profile_img} alt={nombres} className="shadow-lg rounded-full w-60 mx-auto md:w-64" />
+            <div className="md:w-1/2 relative">
+              <div className="justify-center items-center flex h-full">
+                <img
+                  src={profile_img}
+                  alt={nombres}
+                  className="w-4/5 h-4/5 object-cover rounded-full shadow-lg"
+                />
+              </div>
             </div>
             <div className="md:w-1/2 flex items-center overflow-auto overflow-y-hidden">
-              <table className="w-full text-lg">
-                <tbody className="dark:text-gray-200 text-gray-700 font-medium justify-between">
-                  <tr>
-                    <td className="flex items-center gap-2">
-                      <HiOutlineMapPin
-                        className="text-blue-700 flex"
-                        strokeWidth={2}
-                      />
-                      Dirección:
-                    </td>
-                    <td className="text-right">{direccion}</td>
-                  </tr>
-                  <tr>
-                    <td className="flex items-center gap-2">
-                      <HiOutlineCalendarDays
-                        className="text-blue-700"
-                        strokeWidth={2}
-                      />{" "}
-                      F. Nacimiento:
-                    </td>
-                    <td className="text-right">
-                      {moment(fecha_nacimiento).format("MMM Do YY")}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="flex items-center gap-2">
-                      <HiOutlineUsers
-                        className="text-blue-700"
-                        strokeWidth={2}
-                      />
-                      Género:{" "}
-                    </td>
-                    <td className="text-right">{genero}</td>
-                  </tr>
-                  <tr>
-                    <td className="flex items-center gap-2">
-                      <HiOutlinePhone
-                        className="text-blue-700"
-                        strokeWidth={2}
-                      />
-                      Teléfono:{" "}
-                    </td>
-                    <td className="text-right">{telefono}</td>
-                  </tr>
-                  <tr>
-                    <td className="flex items-center gap-2">
-                      <HiOutlineUserPlus
-                        className="text-blue-700"
-                        strokeWidth={2}
-                      />{" "}
-                      Creado el:
-                    </td>
-                    <td className="text-right">
-                      {moment(createdAt).format("MMM Do YY HH:mm")}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="w-full block my-2">
+                <div className="mb-2">
+                  <Input
+                    readOnly
+                    color="blue"
+                    size="lg"
+                    crossOrigin="true"
+                    label="Dirección"
+                    icon={
+                      <HiOutlineMapPin className="h-5 w-5 text-blue-gray-600" />
+                    }
+                    value={direccion}
+                    className="cursor-not-allowed dark:text-gray-100"
+                  />
+                </div>
+                <div className="mb-2">
+                  <Input
+                    readOnly
+                    color="blue"
+                    size="lg"
+                    crossOrigin="true"
+                    label="Fecha Nacimiento"
+                    icon={
+                      <HiOutlineCalendarDays className="h-5 w-5 text-blue-gray-600" />
+                    }
+                    value={moment(fecha_nacimiento).format("MMM Do YY")}
+                    type="text"
+                    className="cursor-not-allowed dark:text-gray-100"
+                  />
+                </div>
+                <div className="mb-2">
+                  <Input
+                    readOnly
+                    color="blue"
+                    size="lg"
+                    crossOrigin="true"
+                    label="Género"
+                    icon={
+                      <HiOutlineUsers className="h-5 w-5 text-blue-gray-600" />
+                    }
+                    value={genero}
+                    type="text"
+                    className="cursor-not-allowed dark:text-gray-100"
+                  />
+                </div>
+                <div className="mb-2">
+                  <Input
+                    readOnly
+                    color="blue"
+                    size="lg"
+                    crossOrigin="true"
+                    label="Teléfono"
+                    icon={
+                      <HiOutlinePhone className="h-5 w-5 text-blue-gray-600" />
+                    }
+                    value={telefono}
+                    type="text"
+                    className="cursor-not-allowed dark:text-gray-100"
+                  />
+                </div>
+                <div className="mb-2">
+                  <Input
+                    readOnly
+                    color="blue"
+                    size="lg"
+                    crossOrigin="true"
+                    label="Creado el:"
+                    icon={
+                      <HiOutlineUserPlus className="h-5 w-5 text-blue-gray-600" />
+                    }
+                    value={moment(createdAt).format("MMM Do YY HH:mm")}
+                    type="text"
+                    className="cursor-not-allowed dark:text-gray-100"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </DialogBody>

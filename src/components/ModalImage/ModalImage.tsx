@@ -1,58 +1,85 @@
 import {
-  Button,
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
 import { PiTrash } from "react-icons/pi";
-import { HiCamera, HiMiniCheckCircle } from "react-icons/hi2";
-import { useState } from "react";
+import {
+  HiCamera,
+  HiMiniCheckCircle,
+  HiMiniArrowUturnLeft,
+} from "react-icons/hi2";
+import { ChangeEvent, useState } from "react";
 import { motion } from "framer-motion";
+import ModalImageButton from "../ModalImageButton";
 
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   imgUrl: string;
-  handleChooseImg: () => void;
-  fileTouched: boolean;
+  handleChooseImg?: () => void;
+  fileTouched?: boolean;
+  setNewImage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ModalImage = ({
-  open,
-  setOpen,
-  imgUrl,
-  handleChooseImg,
-  fileTouched,
-}: Props) => {
-  const [newImage, setNewImage] = useState();
+const ModalImage = ({ open, setOpen, imgUrl, setNewImage }: Props) => {
+  const [image, setImage] = useState("");
+  const [fileTouched, setFileTouched] = useState(false);
 
-  const variants =  {
-    hidden: {
-      x: 0,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    shake: {
-      x: [-5, 5, -5, 5, -3, 3, -2, 2, 0],
-      transition: {
-        duration: 0.5,
-        repeat: Infinity, // Para que la animación se repita indefinidamente
-      },
-    },
+  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0]; // Acceder al primer archivo seleccionado
+
+    if (selectedFile) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const result = e.target?.result as string; // Asegurar el tipo
+        // Cuando se cargue la imagen, actualiza el estado
+        setImage(result);
+        setFileTouched(true);
+      };
+
+      // Lee el contenido del archivo como una URL de datos
+      reader.readAsDataURL(selectedFile);
+    }
   };
-  const chooseImg = () => {
-    handleChooseImg();
+  const handleChooseImg = () =>
+    document?.getElementById("profileImgInput")?.click();
+  const onConfirm = () => {
+    setNewImage(image);
+    setOpen(false);
+  };
+  const onRevertImg = () => {
+    const x = document?.getElementById(
+      "profileImgInput"
+    ) as HTMLInputElement | null;
+    x!.value = "";
+    setImage(imgUrl);
+    setFileTouched(false);
+  };
+  const onDeleteImg = () => {
+    setImage("/src/assets/img/default-avatar.jpg");
+    setFileTouched(true);
   };
 
   return (
     <>
-      <Dialog open={open} handler={() => setOpen(!open)}>
+      <Dialog
+        open={open}
+        handler={() => setOpen(!open)}
+        dismiss={{ enabled: false }}
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+        className="dark:bg-gray-900"
+      >
         <div className="flex items-center justify-between">
           <DialogHeader className="dark:text-gray-300 text-gray-800 font-normal">
             Imagen Perfil
           </DialogHeader>
+          {/* close X icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -72,51 +99,56 @@ const ModalImage = ({
             <img
               id="showImage"
               className="w-64 h-60 md:w-64 md:h-60 rounded-full border-gray-300"
-              src={imgUrl}
+              src={image ? image : imgUrl}
               alt=""
               style={{ position: "relative" }}
             />
           </div>
+          <input
+            type="file"
+            accept=".jpg, .jpeg, .png"
+            id="profileImgInput"
+            className="hidden"
+            onChange={handleFileInputChange}
+          />
         </DialogBody>
         <DialogFooter>
-          <Button
-            variant="gradient"
-            color="white"
-            className="text-center"
-            size="sm"
-          >
-            <div className="flex flex-col items-center">
-              <PiTrash size={30} />
-              <span className="mt-2">ELIMINAR</span>
-            </div>
-          </Button>
-          <Button
-            onClick={chooseImg}
-            variant="gradient"
-            color="white"
-            className="text-center"
-            size="sm"
-          >
-            <div className="flex flex-col items-center">
-              <HiCamera size={30} />
-              <span className="mt-2">AGREGAR</span>
-            </div>
-          </Button>
+          {!fileTouched && (
+            <ModalImageButton
+              text="ELIMINAR"
+              handleClick={onDeleteImg}
+              icon={PiTrash}
+            />
+          )}
+          <ModalImageButton
+            text="AGREGAR"
+            handleClick={handleChooseImg}
+            icon={HiCamera}
+          />
+
           {fileTouched && (
             <motion.div
-            animate={{ x: [0, -5, 5, -5, 0] }}
-            transition={{ duration: 0.5 }}>
-              <Button
-                // onClick={(handleChooseImg)}
-                variant="gradient"
-                color="white"
-                size="sm"
-              >
-                <div className="flex flex-col items-center">
-                  <HiMiniCheckCircle size={30} className="text-green-800" />
-                  <span className="mt-2">CONFIRMAR</span>
-                </div>
-              </Button>
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+                exit: { opacity: 0, y: 10, transition: { duration: 0.7 } },
+              }}
+            >
+              <ModalImageButton
+                text="REVERTIR"
+                handleClick={onRevertImg}
+                iconColor="!text-green-600"
+                icon={HiMiniArrowUturnLeft}
+              />
+              <ModalImageButton
+                text="OK"
+                handleClick={onConfirm}
+                iconColor="!text-green-600"
+                icon={HiMiniCheckCircle}
+              />
             </motion.div>
           )}
         </DialogFooter>

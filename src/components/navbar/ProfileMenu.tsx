@@ -30,7 +30,7 @@ const profileMenuItems = [
   {
     label: "Editar Perfil",
     icon: HiOutlineCog6Tooth,
-    to: '/profile/edit'
+    to: '/profile?edit=true'
   },
   {
     label: "Inbox",

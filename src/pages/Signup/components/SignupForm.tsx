@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { RegistrationFormValues } from "../../../types";
+import { IUserRegistrationFormValues } from "../../../types";
 import CustomInput from "../../Login/components/CustomInputs";
 import { Checkbox, FormErrorMessage } from "../../../components";
 import classNames from "classnames";
@@ -7,7 +7,7 @@ import { FiUserCheck } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 type Props = {
-  onSubmit: SubmitHandler<RegistrationFormValues>;
+  onSubmit: SubmitHandler<IUserRegistrationFormValues>;
 };
 
 const SignupForm = ({ onSubmit }: Props) => {
@@ -16,7 +16,7 @@ const SignupForm = ({ onSubmit }: Props) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<RegistrationFormValues>();
+  } = useForm<IUserRegistrationFormValues>();
   const clsinput = ["relative", "w-1/2", "ml-2", "mb-3"];
 
   return (

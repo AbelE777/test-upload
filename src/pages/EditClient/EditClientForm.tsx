@@ -16,7 +16,7 @@ const EditClientForm = ({ onSubmit, cliente }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-    formState
+    formState,
   } = useForm<IEditClientFormFields>({
     defaultValues: {
       direccion: cliente.fk_usuario.fk_persona.direccion,
@@ -113,7 +113,7 @@ const EditClientForm = ({ onSubmit, cliente }: Props) => {
               type="submit"
               disabled={Object.keys(errors).length > 0}
               variant="outlined"
-              className="rounded-full flex items-center justify-center mx-auto gap-3"
+              className="dark:bg-white rounded-full flex items-center justify-center mx-auto gap-3"
             >
               <HiChevronLeft size={20} />
               Regresar

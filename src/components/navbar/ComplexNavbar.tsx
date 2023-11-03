@@ -5,7 +5,6 @@ import {
   Typography,
   Menu,
   MenuHandler,
-  // MenuList,
   MenuItem,
   IconButton,
   MenuList,
@@ -20,7 +19,7 @@ import {
 } from "react-icons/hi2";
 import ProfileMenu from "./ProfileMenu";
 import classNames from "classnames";
-import logo from "../../assets/svg/logo.svg";
+import logo from "../../assets/img/isotipo.png";
 import { Link } from "react-router-dom";
 import { currentUserSelector } from "../../recoil/selectors";
 import { useRecoilValue } from "recoil";
@@ -191,7 +190,7 @@ function ComplexNavbar() {
     <Navbar className="bg-white dark:bg-gray-900 border-none sticky top-0 z-50 mx-auto max-w-none p-2 rounded-none lg:pl-6">
       <div className={`relative mx-auto flex items-center ${fontDarkLight}`}>
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="" width={15} />
+          <img src={logo} alt="" width={28} />
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
             JAR
           </Typography>

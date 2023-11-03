@@ -1,6 +1,6 @@
 import signupIllustration from "../../assets/svg/signup-illustration.svg";
 import { SubmitHandler } from "react-hook-form";
-import { RegistrationFormValues } from "../../types";
+import { IUserRegistrationFormValues } from "../../types";
 import { getFromPath } from "../../utils/getFromPath";
 import { useLocation, useNavigate } from "react-router-dom";
 import SignupForm from "./components/SignupForm";
@@ -10,7 +10,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onSubmit: SubmitHandler<RegistrationFormValues> = (data) => {
+  const onSubmit: SubmitHandler<IUserRegistrationFormValues> = (data) => {
     console.log(data);
     // setAuth({ user: data });
     const from = getFromPath(location);

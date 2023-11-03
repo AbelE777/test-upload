@@ -78,7 +78,7 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
   // const [isSorting, setIsSorting] = useState(false);
   const [headClicked, setHeadClicked] = useState("");
   const [filteredData, setFilteredData] = useState<IClientData[]>(tableData);
-  console.log('tableData',tableData)
+  
   function convertirTablaAXLSX() {
     const datosAplanados = aplanarDatosCliente(filteredData);
     console.log(datosAplanados);
@@ -478,7 +478,7 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Tooltip content="Editar Cliente">
+                      <Tooltip content="Editar">
                         <Link to={`/clients/${cliente.id_cliente}`}>
                           <IconButton variant="text">
                             <motion.div
@@ -521,14 +521,14 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
         )}
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
+        <Typography variant="small" color="blue-gray" className="font-normal dark:text-gray-100">
           Page 1 of 10
         </Typography>
         <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
+          <Button variant="outlined" size="sm" className="dark:bg-gray-100">
             Previous
           </Button>
-          <Button variant="outlined" size="sm">
+          <Button variant="outlined" size="sm" className="dark:bg-gray-100">
             Next
           </Button>
         </div>

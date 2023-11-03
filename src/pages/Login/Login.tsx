@@ -1,5 +1,4 @@
 import { useNavigate, useLocation } from "react-router-dom";
-// import { useAuth } from "../../hooks";
 import LoginForm from "./components/LoginForm";
 import LoginIllustration from "./components/LoginIllustration";
 import { motion } from "framer-motion";
@@ -11,15 +10,11 @@ import {
   isLoadingState,
   userState,
 } from "../../recoil/atoms";
-import { signIn, 
-  // validateToken 
-} from "../../api/auth";
+import { signIn } from "../../api/auth";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-// import { useEffect } from "react";
 
 const Login = () => {
-  // const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,7 +31,6 @@ const Login = () => {
     const credentials = { username, password };
     try {
       const data = await signIn(credentials);
-      console.log(data);
       const { user, access_token } = data;
       if (user && access_token) {
         localStorage.setItem("access_token", access_token);
@@ -66,7 +60,6 @@ const Login = () => {
     }
   };
 
-  
   // useEffect(() => {
   //   const checkToken = async () => {
   //     const isValidToken = await validateToken();
@@ -84,7 +77,6 @@ const Login = () => {
 
   return (
     <>
-      
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

@@ -20,6 +20,10 @@ import { BreadcrumbsCustom } from './BreadCrumbs/BreadCrumbsCustom';
 import PerfilComponent from './PerfilComponent/PerfilComponent';
 import EditProfile from './EditProfile/EditProfile';
 import ModalImage from './ModalImage/ModalImage';
+import ModalImageButton from './ModalImageButton';
+import FormSteps from './formSteps/FormSteps';
+import CustomImage from './CustomImage/CustomImage';
+import VerticalTable from './VerticalTable/VerticalTable';
 
 
 export {
@@ -44,6 +48,10 @@ export {
   BreadcrumbsCustom,
   PerfilComponent,
   EditProfile,
-  ModalImage
+  ModalImage,
+  ModalImageButton,
+  FormSteps,
+  CustomImage,
+  VerticalTable
 }
 // export { default as SplashScreen } from "./splash/Splash";

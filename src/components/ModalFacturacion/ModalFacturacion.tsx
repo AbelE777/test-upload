@@ -68,9 +68,7 @@ const ModalFacturacion = ({
     return res;
   });
   const handleSelectCliente = (id_cliente: number) => {
-    console.log(id_cliente);
     const x = clientes.filter((cliente) => cliente.id_cliente === id_cliente);
-    console.log(x);
     setClienteSeleccionado(x[0]);
     setIsLoading(true);
     setOpen(!open);
