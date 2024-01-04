@@ -74,7 +74,7 @@ const ContentStep3 = ({
 
   return (
     <div className={`mt-10 ${activeStep === 3 ? "block" : "hidden"}`}>
-      <button onClick={() => console.log(selectedServices)}>ver</button>
+      {/* <button onClick={() => console.log(selectedServices)}>ver</button> */}
       {selectedServices.length ? (
         selectedServices.map((service, idx) => (
           <Accordion
@@ -120,7 +120,7 @@ const ContentStep3 = ({
                     ) : null}
                   </div>
                 </div>
-                {service.files?.length ? (
+                {(service.files?.length && service.precioSeleccionado) ? (
                   <HiCheckCircle className="text-green-400" size={30} />
                 ) : (
                   <HiMiniExclamationCircle

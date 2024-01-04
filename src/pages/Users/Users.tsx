@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { Title, UsersTable } from "../../components";
 import { getCommonUsers } from "../../api";
 import { toast } from 'sonner';
-import { useLogout } from "../../hooks";
+import { useLogout, useVerifyRol } from "../../hooks";
 
 const Users = () => {
+  const verifyRolAndRedirect = useVerifyRol();
+  useEffect(() => {
+    verifyRolAndRedirect(); // Verifica el rol y realiza la redirección si es necesario
+  }, []);
   const logout = useLogout()
   const [users, setUsers] = useState([])
   const TABLE_HEAD = [

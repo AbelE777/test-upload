@@ -1,16 +1,18 @@
 import { SubmitHandler } from "react-hook-form";
 import { IUserRegistrationFormValues } from "../../types";
-// import { getFromPath } from "../../utils/getFromPath";
-// import { useLocation, useNavigate } from "react-router-dom";
 import NewUserForm from "./components/NewUserForm";
 import { motion } from "framer-motion";
 import { Title } from "../../components";
 import { createCommonUser } from "../../api";
 import { toast } from 'sonner';
+import { useVerifyRol } from "../../hooks";
+import { useEffect } from "react";
 
 const NewUser = () => {
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const verifyRolAndRedirect = useVerifyRol();
+  useEffect(() => {
+    verifyRolAndRedirect(); // Verifica el rol y realiza la redirección si es necesario
+  }, []);
 
   const onSubmit: SubmitHandler<IUserRegistrationFormValues> = (data) => {
     console.log(data);

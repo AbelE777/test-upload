@@ -7,14 +7,15 @@ import { motion } from "framer-motion";
 
 const PerfilComponent = () => {
   const { user } = useRecoilValue(currentUserSelector);
-
+  const perfil =
+    user.rol === 1 ? "Administrador" : user.rol === 2 ? "Empleado" : "Cliente";
   return (
     <div className="h-full mx-auto md:mx-auto md:w-4/5">
       <div className="block md:flex rounded-xl">
         <div className="w-full md:w-2/5 p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-900 shadow-md rounded-xl">
           <div className="flex justify-between items-center">
             <span className="dark:text-gray-200 text-xl font-semibold block">
-              {user.rol === 1 ? "Perfil Administrador" : "Perfil Empleado"}
+              Perfil {perfil}
             </span>
             <Link to="/profile?edit=true">
               <Button
@@ -143,13 +144,7 @@ const PerfilComponent = () => {
                   id="rol"
                   className="border-1  rounded-lg px-4 py-2 w-full"
                   type="text"
-                  value={
-                    user.rol === 1
-                      ? "Admin"
-                      : user.rol === 2
-                      ? "Empleado"
-                      : `${user.rol}`
-                  }
+                  value={perfil}
                 />
               </div>
             </div>

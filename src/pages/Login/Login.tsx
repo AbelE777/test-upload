@@ -13,6 +13,7 @@ import {
 import { signIn } from "../../api/auth";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+// import { ParticlesComponent } from "../../components";
 
 const Login = () => {
 
@@ -77,6 +78,7 @@ const Login = () => {
 
   return (
     <>
+      {/* <ParticlesComponent /> */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

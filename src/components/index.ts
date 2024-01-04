@@ -23,7 +23,11 @@ import ModalImage from './ModalImage/ModalImage';
 import ModalImageButton from './ModalImageButton';
 import FormSteps from './formSteps/FormSteps';
 import CustomImage from './CustomImage/CustomImage';
-import VerticalTable from './VerticalTable/VerticalTable';
+import DataReadOnly from './DataReadOnly/DataReadOnly';
+import ParticlesComponent from "./Particles/ParticlesComponent";
+import MarcacionRapida from "./MarcacionRapida/MarcacionRapida";
+import AnimatedButton from "./AnimatedButon";
+import ConfirmModal from './ConfirmModal/ConfirmModal/index';
 
 
 export {
@@ -52,6 +56,10 @@ export {
   ModalImageButton,
   FormSteps,
   CustomImage,
-  VerticalTable
+  DataReadOnly,
+  ParticlesComponent,
+  MarcacionRapida,
+  AnimatedButton,
+  ConfirmModal
 }
 // export { default as SplashScreen } from "./splash/Splash";

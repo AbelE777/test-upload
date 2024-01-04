@@ -10,7 +10,7 @@ export const setTableHeight = () => {
         thElements[index].style.height = `${tdHeight}px`;
       });
     } else {
-      tdElements.forEach((td, index) => {
+      tdElements.forEach((_, index) => {
         thElements[index].style.height = `auto`;
       });
     }

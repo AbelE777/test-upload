@@ -4,6 +4,7 @@ export interface ISidebarItem {
   id: string;
   text: string;
   icon: IconType;
+  iconImg?: string;
   sufixValue?: number | null;
   to: string | null;
 }

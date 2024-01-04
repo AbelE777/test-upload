@@ -6,8 +6,16 @@ import NewClientForm from "./components/NewClientForm";
 import { createUserCliente } from "../../api";
 import { toast } from 'sonner';
 import { useNavigate } from "react-router-dom";
+import { useVerifyRol } from "../../hooks";
+import { useEffect } from "react";
 
 const NewClient = () => {
+  const verifyRolAndRedirect = useVerifyRol();
+  useEffect(() => {
+    verifyRolAndRedirect(); // Verifica el rol y realiza la redirección si es necesario
+  }, []);
+
+
   const navigate = useNavigate()
   const onSubmit: SubmitHandler<INewClientFormFields> = async (data) => {
     data.rol = Number(3); // rol cliente

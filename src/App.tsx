@@ -17,6 +17,7 @@ import {
   Facturacion,
   Remisiones,
   EditClient,
+  Rx
 } from "./pages";
 import { RequireAuth } from "./components";
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/new_user" element={<NewUser />} />
           <Route path="/facturacion" element={<Facturacion />} />
+          <Route path="/rx" element={<Rx />} />
           <Route path="/remisiones" element={<Remisiones />} />
         </Route>
 

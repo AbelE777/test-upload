@@ -5,6 +5,8 @@ import {
   HiOutlinePencil,
   HiOutlineEye,
   HiArrowPath,
+  HiChevronLeft,
+  HiChevronRight,
 } from "react-icons/hi2";
 import { PiTrashSimple } from "react-icons/pi";
 import {
@@ -65,7 +67,7 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
   const [inputFilter, setInputFilter] = useState("");
 
   useEffect(() => {
-    setTableHeight()
+    setTableHeight();
     window.addEventListener("resize", setTableHeight);
     return () => {
       window.removeEventListener("resize", setTableHeight);
@@ -94,8 +96,27 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
     return res;
   });
 
-  const getRolString = (rol: number) => {
-    return rol === 1 ? "ADMIN" : rol === 2 ? "EMPLEADO" : "DESCONOCIDO";
+  const getRolString = (rol: number) =>
+    rol === 1 ? "ADMIN" : rol === 2 ? "EMPLEADO" : "DESCONOCIDO";
+
+  const itemsPorPagina = 5;
+  const [paginaActual, setPaginaActual] = useState(1);
+  const indiceInicio = (paginaActual - 1) * itemsPorPagina;
+  const indiceFinal = paginaActual * itemsPorPagina;
+  const itemsPagina = filtered.slice(indiceInicio, indiceFinal);
+  const paginasTotales = Math.ceil(filtered.length / itemsPorPagina);
+
+  const handlePaginaAnterior = () => {
+    if (paginaActual > 1) {
+      setPaginaActual(paginaActual - 1);
+    }
+  };
+
+  const handlePaginaSiguiente = () => {
+    const paginasTotales = Math.ceil(filtered.length / itemsPorPagina);
+    if (paginaActual < paginasTotales) {
+      setPaginaActual(paginaActual + 1);
+    }
   };
 
   return (
@@ -103,7 +124,11 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
       {modalConfig.open && (
         <Modal modalConfig={modalConfig} setModalConfig={setModalConfig} />
       )}
-      <CardHeader floated={false} shadow={false} className="rounded-none dark:bg-gray-900">
+      <CardHeader
+        floated={false}
+        shadow={false}
+        className="rounded-none dark:bg-gray-900"
+      >
         <div className="mb-8 flex items-center justify-end gap-8">
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <IconButton color="indigo" ripple={true}>
@@ -120,8 +145,7 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
                 className="flex items-center gap-3 bg-blue-500 font-medium"
                 size="sm"
               >
-                <HiUserPlus strokeWidth={1} size={22} /> Añadir nuevo
-                usuario
+                <HiUserPlus strokeWidth={1} size={22} /> Añadir nuevo usuario
               </Button>
             </Link>
           </div>
@@ -152,10 +176,10 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
         </div>
       </CardHeader>
       <CardBody className="overflow-hidden px-0">
-        {filtered.length > 0 ? (
+        {itemsPagina.length > 0 ? (
           <table className="mt-4 w-full flex flex-row flex-nowrap min-w-max table-auto text-left">
             <thead className="">
-              {filtered.map((head, index) => (
+              {itemsPagina.map((head, index) => (
                 <tr
                   className="flex flex-col flex-nowrap sm:table-row mb-2 sm:mb-0"
                   key={`${index}+${head.createdAt}`}
@@ -184,7 +208,7 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
               ))}
             </thead>
             <tbody className="flex-1 sm:flex-none">
-              {filtered.map(
+              {itemsPagina.map(
                 (
                   { createdAt, profile_img, fk_persona, usuario, rol },
                   index
@@ -243,7 +267,10 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
                                 variant="text"
                                 onClick={() => handleOpenModal(modalData)}
                               >
-                                <HiOutlineEye size={22} className="text-gray-600"/>
+                                <HiOutlineEye
+                                  size={22}
+                                  className="text-gray-600"
+                                />
                               </IconButton>
                             </Tooltip>
                           </div>
@@ -328,19 +355,31 @@ const UsersTable = ({ tableData, tableHead }: Props) => {
             </tbody>
           </table>
         ) : (
-          <SinResultados/>
+          <SinResultados />
         )}
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal dark:text-gray-200">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm" className="dark:bg-white">
-            Previous
+      <CardFooter className="flex items-center justify-center border-t border-blue-gray-50 p-4">
+        <div className="flex gap-2 items-center justify-center">
+          <Button
+            onClick={handlePaginaAnterior}
+            disabled={paginaActual === 1}
+            variant="text"
+            size="sm"
+            className="dark:bg-gray-100 rounded-full"
+          >
+            <HiChevronLeft size={15} />
           </Button>
-          <Button variant="outlined" size="sm" className="dark:bg-white">
-            Next
+          <span className="font-medium text-sm">
+            {paginaActual} / {paginasTotales}
+          </span>
+          <Button
+            onClick={handlePaginaSiguiente}
+            disabled={paginaActual === paginasTotales}
+            variant="text"
+            size="sm"
+            className="dark:bg-gray-100 rounded-full"
+          >
+            <HiChevronRight size={15} />
           </Button>
         </div>
       </CardFooter>

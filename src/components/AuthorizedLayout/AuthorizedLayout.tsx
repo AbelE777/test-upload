@@ -1,16 +1,28 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Outlet } from "react-router-dom";
-import { ComplexNavbar, Sidebar, ToggleMenuButton } from "../.";
+import {
+  ComplexNavbar,
+  MarcacionRapida,
+  Sidebar,
+  ToggleMenuButton,
+} from "../.";
 import { useEffect, useRef, useState } from "react";
+import {
+  HiOutlineUserGroup,
+  HiShieldCheck,
+  HiOutlineClipboardDocumentList,
+} from "react-icons/hi2";
+import { FaHandHoldingDollar } from "react-icons/fa6";
+import { useRecoilValue } from "recoil";
+import { currentUserSelector } from "../../recoil/selectors";
 
 const AuthorizedLayout = () => {
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
+  const currentUser = useRecoilValue(currentUserSelector);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
 
-  const handleToggleSidenav = () => {
-    setIsSidenavOpen(!isSidenavOpen);
-  };
+  const handleToggleSidenav = () => setIsSidenavOpen(!isSidenavOpen);
   const handleClickOutside = (event: MouseEvent) => {
     if (
       !sidebarRef.current?.contains(event.target as Node) &&
@@ -40,6 +52,36 @@ const AuthorizedLayout = () => {
     };
   }, []);
 
+  const adminOtions = [
+    {
+      text: "Facturar",
+      icon: HiOutlineClipboardDocumentList,
+      to: "facturacion",
+    },
+    {
+      text: "Usuarios",
+      icon: HiShieldCheck,
+      to: "users",
+    },
+    {
+      text: "Clientes",
+      icon: HiOutlineUserGroup,
+      to: "clients",
+    },
+  ];
+  const clientOtions = [
+    {
+      text: "RX Pct",
+      icon: HiOutlineClipboardDocumentList,
+      to: "rx",
+    },
+    {
+      text: "Remisión",
+      icon: FaHandHoldingDollar,
+      to: "remisiones",
+    },
+  ];
+
   return (
     <main className="min-h-screen">
       <motion.div
@@ -57,7 +99,10 @@ const AuthorizedLayout = () => {
 
       <div className="flex-grow">
         <ComplexNavbar />
-        <div className={`fixed top-0 left-0 h-screen mt-14`} style={{zIndex:'40'}}>
+        <div
+          className={`fixed top-0 left-0 h-screen mt-14`}
+          style={{ zIndex: "40" }}
+        >
           <AnimatePresence>
             {isSidenavOpen && (
               <motion.div
@@ -81,6 +126,11 @@ const AuthorizedLayout = () => {
           transition={{ ease: "easeInOut", duration: 0.3 }}
         >
           <Outlet />
+          {currentUser.user.rol === 3 ? (
+            <MarcacionRapida info={clientOtions} />
+          ) : (
+            <MarcacionRapida info={adminOtions} />
+          )}
         </motion.div>
       </div>
     </main>

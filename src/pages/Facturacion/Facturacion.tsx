@@ -1,22 +1,16 @@
-import {
-  Button,
-  Stepper,
-  Step,
-  Typography,
-  Alert,
-} from "@material-tailwind/react";
+import { Button, Stepper, Step, Typography } from "@material-tailwind/react";
 import {
   ModalFacturacion,
   Title,
-  CustomImage,
-  VerticalTable,
+  DataReadOnly,
+  AnimatedButton,
 } from "../../components";
 import React, { FormEvent, useEffect, useState } from "react";
-import { useLogout } from "../../hooks";
+import { useLogout, useVerifyRol } from "../../hooks";
 import { getClientes } from "../../api";
 import { IClientData } from "../../types";
 import { PiChecks } from "react-icons/pi";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import {
   HiOutlineRectangleStack,
@@ -25,10 +19,11 @@ import {
   HiOutlineTrash,
   HiChevronLeft,
   HiChevronRight,
-  HiOutlineExclamationCircle,
   HiOutlinePhoto,
-  HiMiniExclamationCircle,
-  HiShieldCheck,
+  HiMiniDevicePhoneMobile,
+  HiMiniAtSymbol,
+  HiArrowUpTray,
+  HiOutlineIdentification,
 } from "react-icons/hi2";
 import { FaUserDoctor } from "react-icons/fa6";
 import { Toaster, toast } from "sonner";
@@ -36,14 +31,11 @@ import {
   ModalPiezas,
   ContentStep3,
   ContentStep2,
+  ContentStep4,
   ClienteData,
 } from "./components";
-import {
-  ContentStep4Type,
-  FileWithPreview,
-  PacienteType,
-  ServicesType,
-} from "./types";
+import { FileWithPreview, PacienteType, ServicesType } from "./types";
+import { ConfirmModal } from "../../components";
 
 interface IServices {
   id: string;
@@ -57,13 +49,23 @@ interface IServices {
 }
 
 const Facturacion = () => {
+  const verifyRolAndRedirect = useVerifyRol();
+  useEffect(() => {
+    verifyRolAndRedirect();
+  }, []);
+
   const darkClass = "dark:text-gray-100";
   const logout = useLogout();
   const [clientes, setClientes] = useState<IClientData[]>([]);
   const [clienteSeleccionado, setClienteSeleccionado] = useState<IClientData>();
   const [open, setOpen] = useState(false);
   const [openModalPiezas, setOpenModalPiezas] = useState(false);
+  // modal piezas periapical plus
   const [openModalPiezasPP, setOpenModalPiezasPP] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const closeCM = () => setOpenConfirmModal(false);
+  const openCM = () => setOpenConfirmModal(true);
+
   const [totalPiezasPeriapical, setTotalPiezasPeriapical] = useState<{
     total: number[] | null;
     tipo: string;
@@ -162,8 +164,9 @@ const Facturacion = () => {
     } else if (activeStep === 2 && !selectedServices.length) {
       errMensaje = "Por favor, Selecciona al menos 1 servicio";
       // if (!isLastStep) setActiveStep((cur) => cur + 1);
-    } else if (activeStep === 3) {
+    } else if (activeStep === 3 && missingImageOrPrice().includes(true)) {
       // if (!isLastStep) setActiveStep((cur) => cur + 1);
+      errMensaje = "Por favor, Selecciona precio e imagenes";
     }
     if (errMensaje) {
       toast.error(errMensaje);
@@ -171,6 +174,14 @@ const Facturacion = () => {
     if (!isLastStep && !errMensaje) {
       setActiveStep((cur) => cur + 1);
     }
+  };
+  const handleConfirmModal = () => {
+    const data = {
+      clienteSeleccionado,
+      selectedServices,
+      paciente
+    }
+    console.log(data)
   };
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
@@ -355,6 +366,14 @@ const Facturacion = () => {
     );
   }
 
+  function missingImageOrPrice() {
+    const x = selectedServices.map((service) => {
+      if (!service.precioSeleccionado || !service.files) return true;
+      return false;
+    });
+    return x;
+  }
+
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -363,6 +382,50 @@ const Facturacion = () => {
       [name]: value,
     }));
   };
+  const nombres = clienteSeleccionado?.fk_usuario.fk_persona.nombres;
+  const apellidos = clienteSeleccionado?.fk_usuario.fk_persona.apellidos;
+  const email = clienteSeleccionado?.fk_usuario.fk_persona.email;
+  const telefono = clienteSeleccionado?.fk_usuario.fk_persona.telefono;
+  const nombresApellidos = `${nombres} ${apellidos}`;
+  const dataCliente = [
+    {
+      label: "Nombres",
+      value: nombresApellidos,
+      icon: HiOutlineUser,
+    },
+    {
+      label: "Correo",
+      value: email,
+      icon: HiMiniAtSymbol,
+    },
+    {
+      label: "Teléfono",
+      value: telefono,
+      icon: HiMiniDevicePhoneMobile,
+    },
+  ];
+  const dataPaciente = [
+    {
+      label: "Nombres",
+      value: paciente.nombre,
+      icon: HiOutlineUser,
+    },
+    {
+      label: "Cedula",
+      value: paciente.cedula,
+      icon: HiOutlineIdentification,
+    },
+    {
+      label: "Teléfono",
+      value: paciente.telefono,
+      icon: HiMiniDevicePhoneMobile,
+    },
+    {
+      label: "Cerreo",
+      value: paciente.correo,
+      icon: HiMiniAtSymbol,
+    },
+  ];
 
   return (
     <motion.div
@@ -391,11 +454,11 @@ const Facturacion = () => {
           activeStep={activeStep}
           isLastStep={(value) => setIsLastStep(value)}
           isFirstStep={(value) => setIsFirstStep(value)}
-          className="content-center"
+          className="content-center mx-auto max-w-[900px]"
           lineClassName="bg-indigo-100"
           activeLineClassName="bg-indigo-500"
         >
-          <Step className={"!bg-indigo-700"}>
+          <Step className="!bg-indigo-700 z-0">
             <FaUserDoctor
               className={`h-5 w-5 text-white ${
                 activeStep === 0 ? "block" : "hidden"
@@ -421,7 +484,9 @@ const Facturacion = () => {
             </div>
           </Step>
           <Step
-            className={activeStep <= 0 ? "!bg-indigo-200" : "!bg-indigo-700"}
+            className={`z-0 ${
+              activeStep <= 0 ? "!bg-indigo-200" : "!bg-indigo-700"
+            }`}
           >
             <HiOutlineUser
               className={`h-5 w-5 text-white ${
@@ -448,7 +513,9 @@ const Facturacion = () => {
             </div>
           </Step>
           <Step
-            className={activeStep <= 1 ? "!bg-indigo-200" : "!bg-indigo-700"}
+            className={`z-0 ${
+              activeStep <= 1 ? "!bg-indigo-200" : "!bg-indigo-700"
+            }`}
           >
             <HiOutlineRectangleStack
               className={`h-5 w-5 text-white ${
@@ -475,7 +542,9 @@ const Facturacion = () => {
             </div>
           </Step>
           <Step
-            className={activeStep <= 2 ? "!bg-indigo-200" : "!bg-indigo-700"}
+            className={`z-0 ${
+              activeStep <= 2 ? "!bg-indigo-200" : "!bg-indigo-700"
+            }`}
           >
             <HiOutlinePhoto
               className={`h-5 w-5 text-white ${
@@ -502,7 +571,9 @@ const Facturacion = () => {
             </div>
           </Step>
           <Step
-            className={activeStep === 4 ? "!bg-indigo-700" : "!bg-indigo-200"}
+            className={`z-0 ${
+              activeStep === 4 ? "!bg-indigo-700" : "!bg-indigo-200"
+            }`}
           >
             <HiOutlineClipboardDocument className="h-5 w-5 text-white" />
             <div className="absolute -bottom-[2.0rem] w-max text-center">
@@ -537,6 +608,7 @@ const Facturacion = () => {
           />
         )}
 
+        {/* PASO 1 */}
         <section
           className={`md:w-4/5 md:mx-auto my-10 px-4 ${
             activeStep === 0 ? "block" : "hidden"
@@ -569,12 +641,13 @@ const Facturacion = () => {
                 >
                   <HiOutlineTrash className="text-blue-gray-900" size={20} />
                 </a>
-                <VerticalTable clienteSeleccionado={clienteSeleccionado} />
+                <DataReadOnly info={dataCliente} />
               </div>
             </div>
           )}
         </section>
 
+        {/* PASO 2 */}
         <section
           className={`md:w-3/5 md:mx-auto mt-16 mb-10 px-4 ${
             activeStep === 1 ? "block" : "hidden"
@@ -583,6 +656,7 @@ const Facturacion = () => {
           <ClienteData paciente={paciente} onInputChange={onInputChange} />
         </section>
 
+        {/* PASO 3 */}
         <ContentStep2
           activeStep={activeStep}
           services={services}
@@ -603,105 +677,82 @@ const Facturacion = () => {
           activeStep={activeStep}
           selectedServices={selectedServices}
           clienteSeleccionado={clienteSeleccionado}
+          dataCliente={dataCliente}
+          dataPaciente={dataPaciente}
         />
 
         {/* PREV NEXT BUTTONS */}
-        <div className="mt-32 flex justify-between">
-          <Button
-            onClick={handlePrev}
-            disabled={isFirstStep}
-            variant="text"
-            size="sm"
-            className="font-normal rounded-full flex items-center gap-3 border-none dark:text-gray-300 dark:font-medium"
-          >
-            <HiChevronLeft className="text-blue-gray-900" size={14} /> Anterior
-          </Button>
-          <Button
-            onClick={handleNext}
-            disabled={isLastStep ? true : false}
-            variant="text"
-            size="sm"
-            className="font-normal rounded-full flex items-center gap-3 border-none dark:text-gray-300 dark:font-medium"
-          >
-            Siguiente
-            <HiChevronRight className="text-blue-gray-900" size={14} />
-          </Button>
+        <div className="mt-15 mb-5 flex justify-between">
+          <AnimatedButton>
+            <Button
+              onClick={handlePrev}
+              disabled={isFirstStep}
+              variant="text"
+              size="sm"
+              className="font-normal rounded-full flex items-center gap-3 dark:border dark:text-gray-300 dark:font-medium"
+            >
+              <HiChevronLeft className="text-blue-gray-900 dark:text-white" size={14} />{" "}
+              Anterior
+            </Button>
+          </AnimatedButton>
+
+          <AnimatedButton>
+            <Button
+              onClick={
+                isLastStep ? (openConfirmModal ? closeCM : openCM) : handleNext
+              }
+              variant="text"
+              size="sm"
+              className={`font-normal rounded-full flex items-center gap-3 dark:border dark:text-gray-300 dark:font-medium ${
+                isLastStep && "font-medium border border-gray-500"
+              }`}
+            >
+              {isLastStep ? "Enviar" : "Siguiente"}
+              {isLastStep ? (
+                <HiArrowUpTray className="text-blue-gray-900 dark:text-white" size={14} />
+              ) : (
+                <HiChevronRight className="text-blue-gray-900 dark:text-white" size={14} />
+              )}
+            </Button>
+          </AnimatedButton>
         </div>
       </div>
+      <AnimatePresence mode="wait" onExitComplete={() => null} initial={false}>
+        {openConfirmModal && (
+          <ConfirmModal handleClose={closeCM}>
+            <div className="flex flex-col mx-auto my-8 dark:text-white">
+              <p className="font-medium text-xl">Por favor, asegúrate de revisar toda la información antes de enviar.</p>
+              <p>¿Estás seguro de enviar el formulario?</p>
+            </div>
+            <div className="flex gap-3 mt-auto">
+              <AnimatedButton>
+                <Button
+                  onClick={closeCM}
+                  variant="text"
+                  size="sm"
+                  className="font-normal rounded-full flex items-center gap-3 border border-gray-500 dark:text-white dark:bg-black dark:font-medium"
+                >
+                  <HiChevronLeft className="text-blue-gray-900 dark:text-white" size={14} />{" "}
+                  Volver
+                </Button>
+              </AnimatedButton>
+              <AnimatedButton>
+                <Button
+                  onClick={handleConfirmModal}
+                  variant="text"
+                  size="sm"
+                  className="font-normal rounded-full flex items-center gap-3 border border-gray-500 dark:text-white dark:bg-green-900 dark:border-none"
+                >
+                  Confirmar{" "}
+                  <HiArrowUpTray className="text-blue-gray-900 dark:text-white" size={14} />
+                </Button>
+              </AnimatedButton>
+            </div>
+          </ConfirmModal>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
 
 export default Facturacion;
-
-const ContentStep4 = ({
-  activeStep,
-  selectedServices,
-  clienteSeleccionado,
-}: ContentStep4Type) => {
-  return (
-    <>
-      <div className={`mt-10 ${activeStep === 4 ? "block" : "hidden"}`}>
-        {selectedServices?.length > 0 ? (
-          selectedServices?.map((service) => {
-            if (service.files?.length && service.files?.length > 0)
-              return (
-                <div key={service.id} className="">
-                  <h2 className="text-lg uppercase mb-0 dark:text-gray-100">
-                    Servicio {service.nombre}
-                  </h2>
-                  <ul className="mt-0 mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-10">
-                    {service?.files?.map((file) => (
-                      <li key={file.size} className="h-32 rounded-md shadow-lg">
-                        <CustomImage file={file} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            else {
-              return (
-                <div
-                  key={service.id}
-                  className="flex gap-2 mx-auto justify-center items-center max-w-xl"
-                >
-                  <Alert
-                    icon={
-                      <HiMiniExclamationCircle
-                        size={23}
-                        className="text-[#c92e5f]"
-                      />
-                    }
-                    className="dark:text-gray-100 rounded-md border-l-4 border-[#c92e5f] bg-[#c92e5f]/10 font-bold mb-10 text-[#c92e5f] items-center"
-                  >
-                    Aún no has subido imagenes para el servicio{" "}
-                    <span className="uppercase">{service.nombre}</span>
-                  </Alert>
-                </div>
-              );
-            }
-          })
-        ) : (
-          <div className="flex gap-2 mx-auto justify-center items-center">
-            <HiOutlineExclamationCircle
-              size={23}
-              className="text-blue-gray-800"
-            />
-            <p>Para continuar, debes seleccionar servicios!</p>
-          </div>
-        )}
-        <p className="dark:text-gray-100 dark:font-normal text-lg font-bold text-blue-gray-800 flex justify-center items-center gap-4">
-          Médico asignado <HiShieldCheck size={25} className="text-green-800" />
-        </p>
-        <div className="md:w-1/2 relative mx-auto">
-          <img
-            src={clienteSeleccionado?.fk_usuario.profile_img}
-            alt={clienteSeleccionado?.profesion}
-            className="rounded-full w-60 mx-auto md:w-64 shadow-lg"
-          />
-          <VerticalTable clienteSeleccionado={clienteSeleccionado} />
-        </div>
-      </div>
-    </>
-  );
-};

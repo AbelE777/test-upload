@@ -1,12 +1,16 @@
 import { getClientes } from "../../api";
 import { BreadcrumbsCustom, ClientesTable, Title } from "../../components";
 import { toast } from "sonner";
-import { useLogout } from "../../hooks";
+import { useLogout, useVerifyRol } from "../../hooks";
 import { useEffect, useState } from "react";
 
 const Clients = () => {
   const logout = useLogout();
   const [clientes, setClientes] = useState([]);
+  const verifyRolAndRedirect = useVerifyRol();
+  useEffect(() => {
+    verifyRolAndRedirect(); // Verifica el rol y realiza la redirección si es necesario
+  }, []);
 
   const TABLE_HEAD = [
     "Cliente",
@@ -24,13 +28,11 @@ const Clients = () => {
   useEffect(() => {
     getClientes()
       .then((response) => {
-        console.log(response);
         setClientes(response.data);
         // if(Array.isArray(response.data)) toast.success("OK!")
       })
       .catch((error) => {
         // La Promesa fue rechazada debido a un error
-        console.error("Error al traer datos de clientes:", error);
         toast.error("Error al traer datos de clientes");
         // if(Array.isArray(error.response.data.message)) toast.error(error.response.data.message[0])
         // else toast.error(error.response.data.message)
@@ -39,6 +41,9 @@ const Clients = () => {
         }
       });
   }, []);
+
+  
+  
   
 
   return (

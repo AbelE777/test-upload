@@ -11,7 +11,6 @@ const CustomInput = ({
   rules,
   register,
   errors,
-  capitalize,
   autofocus,
 }: LoginInputProps) => {
   const [showPassword, setShowPassword] = useState(false);

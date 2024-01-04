@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 import { IClientData } from "../../types";
 
 export interface FileWithPreview extends File {
@@ -17,6 +18,16 @@ export interface ContentStep4Type {
   activeStep: number;
   selectedServices: ServicesType[];
   clienteSeleccionado: IClientData | undefined;
+  dataCliente: {
+    label: string;
+    value: string | undefined;
+    icon: IconType;
+}[],
+dataPaciente: {
+  label: string;
+  value: string | undefined;
+  icon: IconType;
+}[],
 }
 export interface PacienteType {
   nombre: string;

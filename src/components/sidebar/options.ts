@@ -7,7 +7,9 @@ import {
   HiMiniCog,
   HiPower,
   HiOutlineUserGroup,
+  HiPhoto
 } from "react-icons/hi2";
+import {FaHandHoldingDollar} from "react-icons/fa6"
 import { IAccordionOptions, ISidebarItem } from "../../types";
 
 export const mainMenuOptionsArr: IAccordionOptions[] = [
@@ -41,7 +43,7 @@ export const mainMenuOptionsArr: IAccordionOptions[] = [
         icon: HiChevronRight,
         text: "Remisiones",
         to: "remisiones",
-      }
+      },
     ],
     to: null,
   },
@@ -63,13 +65,13 @@ export const mainMenuOptionsArr: IAccordionOptions[] = [
         icon: HiChevronRight,
         text: "Agregar Usuario",
         to: "new_user",
-      }
+      },
     ],
     to: null,
-  }
+  },
 ];
 
-export const menuOptionsArr: ISidebarItem[] = [
+const simpleoptions = [
   {
     id: "home",
     icon: HiOutlineHome,
@@ -99,3 +101,51 @@ export const menuOptionsArr: ISidebarItem[] = [
     to: null,
   },
 ];
+const doctorsimpleoptions = [  
+  {
+    id: "home",
+    icon: HiOutlineHome,
+    text: "Home",
+    sufixValue: null,
+    to: "/",
+  },
+  {
+    id: "profile",
+    icon: HiUserCircle,
+    text: "Mi Perfil",
+    sufixValue: null,
+    to: "profile",
+  },
+  {
+    id: "settings",
+    icon: HiMiniCog,
+    text: "Configuración",
+    sufixValue: null,
+    to: "settings",
+  },
+  {
+    id: "gallery",
+    icon: HiPhoto,
+    iconImg: "src/assets/img/4100761.png",
+    text: "RX Pcte",
+    sufixValue: null,
+    to: "rx",
+  },
+  {
+    id: "remisiones",
+    icon: FaHandHoldingDollar,
+    text: "Remisiones",
+    sufixValue: null,
+    to: "remisiones",
+  },
+  {
+    id: "logout",
+    icon: HiPower,
+    text: "Cerrar Sesión",
+    sufixValue: null,
+    to: null,
+  },
+];
+
+export const menuOptionsArr: ISidebarItem[] = simpleoptions;
+export const doctorMenuOptionsArr: ISidebarItem[] = doctorsimpleoptions;

@@ -1,7 +1,4 @@
-import { Outlet, 
-  useLocation, 
-  useNavigate 
-} from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../pages/Login/components/Footer";
 import { CustomSpinner } from "..";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -27,8 +24,8 @@ const Layout = () => {
       if (isValidToken) {
         // El token es válido, redirige al usuario a la página de inicio
         setIsAuthenticated(true);
-        if(location.pathname === '/login') {
-          navigate('/');
+        if (location.pathname === "/login") {
+          navigate("/");
         }
         // navigate(from, { replace: true });
       } else {

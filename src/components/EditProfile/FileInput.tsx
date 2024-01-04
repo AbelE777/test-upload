@@ -9,7 +9,7 @@ export interface InputFileProps {
   errors:FieldErrors<any>;
 }
 
-const FileInput = ({ label, name, rules, register, errors }:InputFileProps) => {
+const FileInput = ({ label, name, rules, register }:InputFileProps) => {
   
   return (
     <>

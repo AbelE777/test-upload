@@ -11,11 +11,7 @@ import {
   Avatar,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import {
-  HiMagnifyingGlass,
-  HiChevronUpDown,
-  HiCheck,
-} from "react-icons/hi2";
+import { HiMagnifyingGlass, HiChevronUpDown, HiCheck } from "react-icons/hi2";
 import { IClientData } from "../../types";
 import { isLoadingState } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
@@ -222,7 +218,7 @@ const ModalFacturacion = ({
             </tbody>
           </table>
         ) : (
-          <SinResultados/>
+          <SinResultados />
         )}
       </DialogBody>
       <DialogFooter>

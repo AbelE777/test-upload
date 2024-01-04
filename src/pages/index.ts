@@ -13,6 +13,7 @@ import {Users} from './Users';
 import Facturacion from './Facturacion/Facturacion';
 import Remisiones from './Remisiones/Remisiones';
 import EditClient from './EditClient/EditClient';
+import {Rx} from './RX';
 
 
 export {
@@ -30,5 +31,6 @@ export {
   Users,
   Facturacion,
   Remisiones,
-  EditClient
+  EditClient,
+  Rx
 }

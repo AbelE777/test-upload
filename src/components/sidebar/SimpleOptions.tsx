@@ -4,7 +4,6 @@ import {
   ListItemSuffix,
   Chip,
 } from "@material-tailwind/react";
-// import { menuOptions } from "./options";
 
 import RenderIcon from "./RenderIcon";
 import { ISidebarItem } from "../../types";
@@ -34,14 +33,10 @@ const SimpleOptions = ({
   const navigate = useNavigate();
   const logout = useLogout();
 
-
   const handleLogout = () => {
-    // setIsAuthenticated(false);
-    // setUser({ user:null, access_token:null});
-    // removeFromLocalStorage()
-    logout()
-    navigate('/login');
-  }
+    logout();
+    navigate("/login");
+  };
   return (
     <>
       {menuOptionsArr.map((option) => {
@@ -52,7 +47,11 @@ const SimpleOptions = ({
                 className={`${myDarkClass} ${myLightClass} active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900`}
               >
                 <ListItemPrefix>
-                  <RenderIcon icon={option.icon} nameclass="h-5 w-5" />
+                  {option.iconImg ? (
+                    <img src={option.iconImg} alt="rx" width={30} />
+                  ) : (
+                    <RenderIcon icon={option.icon} nameclass="h-5 w-5" />
+                  )}
                 </ListItemPrefix>
                 {option.text}
                 {option.sufixValue && (
@@ -74,9 +73,9 @@ const SimpleOptions = ({
             <ListItem
               key={option.id}
               className={`${myDarkClass} ${myLightClass} active:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900`}
-              onClick={()=> {
-                if(option.id === 'logout') {
-                  handleLogout()
+              onClick={() => {
+                if (option.id === "logout") {
+                  handleLogout();
                 }
               }}
             >

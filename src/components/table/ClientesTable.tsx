@@ -7,6 +7,8 @@ import {
   HiOutlineEye,
   HiChevronDown,
   HiChevronUp,
+  HiChevronRight,
+  HiChevronLeft,
 } from "react-icons/hi2";
 import * as XLSX from "xlsx";
 import {
@@ -37,6 +39,7 @@ import { useLogout } from "../../hooks";
 import { toast } from "sonner";
 import { isLoadingState } from "../../recoil/atoms";
 import { useRecoilState } from "recoil";
+import usePagination from "../../hooks/usePagination";
 
 interface Props {
   tableData: IClientData[];
@@ -78,7 +81,7 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
   // const [isSorting, setIsSorting] = useState(false);
   const [headClicked, setHeadClicked] = useState("");
   const [filteredData, setFilteredData] = useState<IClientData[]>(tableData);
-  
+
   function convertirTablaAXLSX() {
     const datosAplanados = aplanarDatosCliente(filteredData);
     console.log(datosAplanados);
@@ -87,14 +90,7 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
     XLSX.utils.book_append_sheet(libroDeTrabajo, libro, "MiHojaDeCalculo");
     XLSX.writeFile(libroDeTrabajo, "datos_clientes.xlsx");
   }
-
-  useEffect(() => {
-    setTableHeight();
-    window.addEventListener("resize", setTableHeight);
-    return () => {
-      window.removeEventListener("resize", setTableHeight);
-    };
-  }, [inputFilter, order]);
+  
 
   const handleOpenModal = (modalData: IModalData) => {
     setModalConfig({ open: !modalConfig.open, data: modalData });
@@ -206,9 +202,22 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
   useEffect(() => {
     setFilteredData(tableData); // Inicialmente, los datos filtrados son los mismos que los datos iniciales
   }, [tableData]);
-  // useEffect(() => {
-  //   refreshTableData();
-  // }, []);
+  const itemsPorPagina = 5;
+  const {
+    paginaActual,
+    itemsPagina,
+    paginasTotales,
+    handlePaginaAnterior,
+    handlePaginaSiguiente,
+  } = usePagination(filteredData, itemsPorPagina);
+
+  useEffect(() => {
+    setTableHeight();
+    window.addEventListener("resize", setTableHeight);
+    return () => {
+      window.removeEventListener("resize", setTableHeight);
+    };
+  }, [inputFilter, order, paginaActual]);
 
   return (
     <Card className="w-full overflow-x-auto dark:bg-gray-900">
@@ -285,7 +294,7 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
         </div>
       </CardHeader>
       <CardBody className="overflow-hidden px-0">
-        {filteredData.length > 0 && headClicked.length > 0 && (
+        {itemsPagina.length > 0 && headClicked.length > 0 && (
           <motion.div
             initial="hidden"
             animate="visible"
@@ -311,13 +320,13 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
             </Button>
           </motion.div>
         )}
-        {filteredData.length > 0 ? (
+        {itemsPagina.length > 0 ? (
           <table
             id="miTabla"
             className="mt-4 w-full flex flex-row flex-nowrap min-w-max table-auto text-left"
           >
             <thead className="">
-              {filteredData.map((head, index) => (
+              {itemsPagina.map((head, index) => (
                 <tr
                   className="flex flex-col flex-nowrap sm:table-row mb-2 sm:mb-0"
                   key={`${index}+${head.createdAt}`}
@@ -359,7 +368,7 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
               ))}
             </thead>
             <tbody className="flex-1 sm:flex-none">
-              {filteredData.map((cliente, index) => {
+              {itemsPagina.map((cliente, index) => {
                 const { profesion, createdAt, precio, fk_usuario, zona } =
                   cliente;
                 const { profile_img, fk_persona, usuario } = fk_usuario;
@@ -520,16 +529,26 @@ const ClientesTable = ({ tableData, tableHead }: Props) => {
           <SinResultados />
         )}
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal dark:text-gray-100">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm" className="dark:bg-gray-100">
-            Previous
+      <CardFooter className="flex flex-col-reverse items-center justify-between border-t border-blue-gray-50 p-4">
+        <div className="flex gap-2 items-center justify-between">
+          <Button
+            onClick={handlePaginaAnterior}
+            disabled={paginaActual === 1}
+            variant="text"
+            size="sm"
+            className="dark:bg-gray-100 rounded-full"
+          >
+            <HiChevronLeft size={15} />
           </Button>
-          <Button variant="outlined" size="sm" className="dark:bg-gray-100">
-            Next
+          <span className="font-medium text-sm">{paginaActual} / {paginasTotales}</span>
+          <Button
+            onClick={handlePaginaSiguiente}
+            disabled={paginaActual === paginasTotales}
+            variant="text"
+            size="sm"
+            className="dark:bg-gray-100 rounded-full"
+          >
+            <HiChevronRight size={15} />
           </Button>
         </div>
       </CardFooter>
