@@ -1,7 +1,7 @@
 import "./App.css";
 import Layout from "./components/layout/Layout";
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import {
   Login,
   PageNotFound,
@@ -35,18 +35,20 @@ function App() {
 
         {/* protected routes */}
         <Route element={<RequireAuth />}>
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route path="/clients/:id" element={<EditClient/>} />
-          <Route path="/new_client" element={<NewClient />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/new_user" element={<NewUser />} />
-          <Route path="/facturacion" element={<Facturacion />} />
-          <Route path="/rx" element={<Rx />} />
-          <Route path="/remisiones" element={<Remisiones />} /> */}
+          <Route path="/" element={<Navigate to="/files" replace />} />
+          {/* <Route path="/" element={<Home />} /> */}
+          {/* Redirección de / a /files */}
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          {/* <Route path="/clients" element={<Clients />} /> */}
+          {/* <Route path="/clients/:id" element={<EditClient/>} /> */}
+          {/* <Route path="/new_client" element={<NewClient />} /> */}
+          {/* <Route path="/settings" element={<Settings />} /> */}
+          {/* <Route path="/profile" element={<Profile />} /> */}
+          {/* <Route path="/users" element={<Users />} /> */}
+          {/* <Route path="/new_user" element={<NewUser />} /> */}
+          {/* <Route path="/facturacion" element={<Facturacion />} /> */}
+          {/* <Route path="/rx" element={<Rx />} /> */}
+          {/* <Route path="/remisiones" element={<Remisiones />} /> */}
           <Route path="/files" element={<FilesPage />} />
         </Route>
 

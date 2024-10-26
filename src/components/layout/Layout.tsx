@@ -39,7 +39,7 @@ const Layout = () => {
 
   return (
     <>
-      <Toaster position="top-center" richColors closeButton />
+      <Toaster position="top-right" richColors closeButton />
       <main className="flex flex-col min-h-screen">
         <Outlet />
       </main>

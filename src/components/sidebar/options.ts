@@ -137,7 +137,7 @@ const doctorsimpleoptions = [
     icon: BsFolder2Open,
     text: "Archivos",
     sufixValue: null,
-    to: "files",
+    to: "/files",
   },
   {
     id: "logout",

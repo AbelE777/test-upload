@@ -209,9 +209,9 @@ function ComplexNavbar() {
         </IconButton>
         <ProfileMenu />
       </div>
-      <Collapse open={isNavOpen} className="overflow-scroll">
+      {/* <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </Collapse>
+      </Collapse> */}
     </Navbar>
   );
 }

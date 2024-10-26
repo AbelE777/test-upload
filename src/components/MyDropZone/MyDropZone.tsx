@@ -11,12 +11,12 @@ interface Props {
   className: string;
   serviceId: string;
   serviceName: string;
-  files: FileWithPreview[];
-  addFilesToSelectedServices: (
+  files?: FileWithPreview[];
+  addFilesToSelectedServices?: (
     serviceId: string,
     acceptedFiles: FileWithPreview[]
   ) => void;
-  removeFileFromSelectedServices: (
+  removeFileFromSelectedServices?: (
     serviceId: string,
     fileToRemove: File
   ) => void;
@@ -30,7 +30,7 @@ const MyDropZone = ({
   removeFileFromSelectedServices,
   files,
 }: Props) => {
-  const [localFiles, setLocalFiles] = useState<FileWithPreview[]>(files);
+  const [localFiles, setLocalFiles] = useState<FileWithPreview[]>(files ?? []);
   const [rejected, setRejected] = useState<FileRejection[]>([]);
 
   const onDrop = useCallback(
@@ -45,7 +45,7 @@ const MyDropZone = ({
         const transformedFiles = acceptedFiles.map((file) =>
           Object.assign(file, { preview: URL.createObjectURL(file) })
         );
-        addFilesToSelectedServices(serviceId, transformedFiles);
+        if (addFilesToSelectedServices) addFilesToSelectedServices(serviceId, transformedFiles);
       }
       if (rejectedFiles?.length) {
         setRejected((previusFiles) => [...previusFiles, ...rejectedFiles]);
@@ -56,16 +56,15 @@ const MyDropZone = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      "image/png": [".png"],
-      "image/jpeg": [".jpeg"],
-      "image/jpg": [".jpg"],
+      "image/*": [".png", ".jpg", ".jpeg"],
+      'application/pdf': ['.pdf']
     },
-    maxSize: 1024 * 1000, // 1mb
+    maxSize: 1024 * 1000, // acepta maximo 1mb
   });
 
   const removeFile = (file_: File) => {
     setLocalFiles((files) => files.filter((file) => file.name !== file_.name));
-    removeFileFromSelectedServices(serviceId, file_);
+    if (removeFileFromSelectedServices) removeFileFromSelectedServices(serviceId, file_);
   };
 
   const removeRejected = (name: string) => {
@@ -74,7 +73,7 @@ const MyDropZone = ({
 
   useEffect(() => {
     return () => {
-      files.forEach((file) => {
+      files?.forEach((file) => {
         URL.revokeObjectURL(file.preview); // Liberar la URL generada
       });
     };
@@ -86,7 +85,7 @@ const MyDropZone = ({
         <input {...getInputProps()} />
         {isDragActive ? (
           <>
-            <p className="text-lg mb-4 dark:text-gray-100">Suelta tus imágenes aquí ...</p>
+            <p className="text-lg mb-4 dark:text-gray-100">Suelta tus archivos aquí ...</p>
             <HiOutlineArrowUpTray size={25} className="text-blue-500 mx-auto" />
           </>
         ) : (
@@ -97,7 +96,7 @@ const MyDropZone = ({
           >
             <p className="uppercase dark:text-gray-100">{serviceName}</p>
             <p className="text-lg mb-4 dark:text-gray-100">
-              Arrastra y suelta tus imágenes aquí, o click para seleccionar
+              Arrastra y suelta tus archivos aquí, o click para seleccionar
             </p>
             <HiOutlineArrowUpTray size={25} className="text-blue-500 mx-auto" />
           </motion.div>

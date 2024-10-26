@@ -14,6 +14,12 @@ export type ServicesType = {
   files?: FileWithPreview[];
 };
 
+export type FilesInterface = {
+  id: string;
+  nombre: string;
+  files: FileWithPreview[];
+}
+
 export interface ContentStep4Type {
   activeStep: number;
   selectedServices: ServicesType[];

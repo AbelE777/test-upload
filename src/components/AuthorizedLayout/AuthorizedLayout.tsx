@@ -9,9 +9,9 @@ import {
 import { useEffect, useRef, useState } from "react";
 import {
   HiOutlineUserGroup,
-  HiShieldCheck,
   HiOutlineClipboardDocumentList,
 } from "react-icons/hi2";
+import { BsFolder2Open } from "react-icons/bs";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { useRecoilValue } from "recoil";
 import { currentUserSelector } from "../../recoil/selectors";
@@ -54,19 +54,9 @@ const AuthorizedLayout = () => {
 
   const adminOtions = [
     {
-      text: "Facturar",
-      icon: HiOutlineClipboardDocumentList,
-      to: "facturacion",
-    },
-    {
-      text: "Usuarios",
-      icon: HiShieldCheck,
-      to: "users",
-    },
-    {
-      text: "Clientes",
-      icon: HiOutlineUserGroup,
-      to: "clients",
+      text: "Archivos",
+      icon: BsFolder2Open,
+      to: "/files",
     },
   ];
   const clientOtions = [
@@ -126,11 +116,12 @@ const AuthorizedLayout = () => {
           transition={{ ease: "easeInOut", duration: 0.3 }}
         >
           <Outlet />
-          {currentUser.user.rol === 3 ? (
+          {/* {currentUser.user.rol === 3 ? (
             <MarcacionRapida info={clientOtions} />
           ) : (
             <MarcacionRapida info={adminOtions} />
-          )}
+          )} */}
+          <MarcacionRapida info={adminOtions} />
         </motion.div>
       </div>
     </main>

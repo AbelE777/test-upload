@@ -17,30 +17,16 @@ import {
   HiPower,
 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { BsFolder2Open } from "react-icons/bs";
 import { currentUserSelector } from "../../recoil/selectors";
 import { useRecoilValue } from "recoil";
 import { useLogout } from "../../hooks";
 
 const profileMenuItems = [
   {
-    label: "Mi Perfil",
-    icon: HiUserCircle,
-    to: '/profile'
-  },
-  {
-    label: "Editar Perfil",
-    icon: HiOutlineCog6Tooth,
-    to: '/profile?edit=true'
-  },
-  {
-    label: "Inbox",
-    icon: HiOutlineInboxArrowDown,
-    to: '/inbox'
-  },
-  {
-    label: "Ayuda",
-    icon: HiOutlineLifebuoy,
-    to: '/ayuda'
+    label: "Archivos",
+    icon: BsFolder2Open,
+    to: '/files'
   },
   {
     label: "Cerrar Sesión",
