@@ -7,15 +7,7 @@ import { motion } from "framer-motion";
 interface FileWithPreview extends File {
   preview: string;
 }
-
-const MyDropZone = ({
-  className,
-  serviceId,
-  serviceName,
-  addFilesToSelectedServices,
-  removeFileFromSelectedServices,
-  files,
-}: {
+interface Props {
   className: string;
   serviceId: string;
   serviceName: string;
@@ -28,7 +20,16 @@ const MyDropZone = ({
     serviceId: string,
     fileToRemove: File
   ) => void;
-}) => {
+}
+
+const MyDropZone = ({
+  className,
+  serviceId,
+  serviceName,
+  addFilesToSelectedServices,
+  removeFileFromSelectedServices,
+  files,
+}: Props) => {
   const [localFiles, setLocalFiles] = useState<FileWithPreview[]>(files);
   const [rejected, setRejected] = useState<FileRejection[]>([]);
 

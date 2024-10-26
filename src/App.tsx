@@ -17,7 +17,8 @@ import {
   Facturacion,
   Remisiones,
   EditClient,
-  Rx
+  Rx,
+  FilesPage
 } from "./pages";
 import { RequireAuth } from "./components";
 
@@ -35,7 +36,7 @@ function App() {
         {/* protected routes */}
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/clients/:id" element={<EditClient/>} />
           <Route path="/new_client" element={<NewClient />} />
@@ -45,7 +46,8 @@ function App() {
           <Route path="/new_user" element={<NewUser />} />
           <Route path="/facturacion" element={<Facturacion />} />
           <Route path="/rx" element={<Rx />} />
-          <Route path="/remisiones" element={<Remisiones />} />
+          <Route path="/remisiones" element={<Remisiones />} /> */}
+          <Route path="/files" element={<FilesPage />} />
         </Route>
 
         {/* catch all */}

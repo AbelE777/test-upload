@@ -29,6 +29,8 @@ const NewUserForm = ({ onSubmit }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      
+      {/* NOMBRES Y APELLIDOS */}
       <div className={classNames(twoColsContainer)}>
         <div className={classNames(column)}>
           <CustomInput
@@ -96,9 +98,9 @@ const NewUserForm = ({ onSubmit }: Props) => {
               },
               required: "Este campo es obligatorio",
               validate: (value: string) => {
-                if (!validadorCedula(value)) {
-                  return "Número de cédula inválido";
-                }
+                // if (!validadorCedula(value)) {
+                //   return "Número de cédula inválido";
+                // }
               },
             }}
           />
@@ -145,8 +147,8 @@ const NewUserForm = ({ onSubmit }: Props) => {
             label="Dirección *"
             rules={{
               minLength: {
-                value: 10,
-                message: "Dirección debe contener al menos 10 caracteres",
+                value: 5,
+                message: "Dirección debe contener al menos 5 caracteres",
               },
               required: "Este campo es obligatorio",
             }}
@@ -191,7 +193,7 @@ const NewUserForm = ({ onSubmit }: Props) => {
           <SelectInput
             name="genero"
             label="Género *"
-            options={["Masculino", "Femeinno", "Otro"]}
+            options={["Masculino", "Femenino", "Otro"]}
             errors={errors}
             control={control}
             register={register}
@@ -283,8 +285,8 @@ const NewUserForm = ({ onSubmit }: Props) => {
             rules={{
               pattern: {
                 value:
-                  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{7,}$/i,
-                message: `Contraseña debe contener al menos 7 caracteres, y 1 número o 1 caracter especial`,
+                  /^(?=.*[0-9\W])(?=.{7,})(?!.*\s).+$/i,
+                message: `Contraseña debe contener al menos 7 caracteres, y 1 número o 1 caracter especial, sin espacios`,
               },
               required: "Este campo es obligatorio",
               validate: (val: string) => {
@@ -292,7 +294,11 @@ const NewUserForm = ({ onSubmit }: Props) => {
                 if (watch("password") != val) {
                   return "Las contraseñas deben conincidir";
                 } 
-                else if(val.includes(' ')) return 'Contraseña no puede contener espacios en blanco'
+                // else if(val.includes(' ')) return 'Contraseña no puede contener espacios en blanco'
+                else {
+                  // trigger("password")
+                  console.log('hola', watch("password"))
+                }
               },
             }}
           />

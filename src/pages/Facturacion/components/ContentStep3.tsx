@@ -3,6 +3,7 @@ import {
   AccordionHeader,
   AccordionBody,
   Radio,
+  Tooltip,
 } from "@material-tailwind/react";
 import {
   HiOutlineExclamationCircle,
@@ -153,12 +154,14 @@ const ContentStep3 = ({
                       />
                     ))}
                   </div>
-                  <div className="flex items-center justify-center gap-1">
-                    <FaHandHoldingDollar className="text-blue-500" size={26} />{" "}
-                    <span className="text-blue-500 text-lg">
-                      {service.remision}
-                    </span>
-                  </div>
+                  <Tooltip content="Valor de remisión" placement="right">
+                    <div className="flex items-center justify-center gap-1 cursor-pointer">
+                      <FaHandHoldingDollar className="text-blue-500" size={26} />{" "}
+                      <span className="text-blue-500 text-lg">
+                        $ {service.remision}
+                      </span>
+                    </div>
+                  </Tooltip>
                 </div>
               </div>
               <div className="md:w-3/4 flex justify-center items-center mx-0 md:mx-auto">

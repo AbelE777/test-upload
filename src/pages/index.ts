@@ -14,6 +14,7 @@ import Facturacion from './Facturacion/Facturacion';
 import Remisiones from './Remisiones/Remisiones';
 import EditClient from './EditClient/EditClient';
 import {Rx} from './RX';
+import { FilesPage } from "./FilesPage";
 
 
 export {
@@ -32,5 +33,6 @@ export {
   Facturacion,
   Remisiones,
   EditClient,
-  Rx
+  Rx,
+  FilesPage
 }

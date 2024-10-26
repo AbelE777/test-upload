@@ -38,7 +38,7 @@ export default function MarcacionRapida({ info }: Props) {
           <SpeedDialContent>
             {info.map((option, idx) => (
               <Link key={idx} to={option.to}>
-                <SpeedDialAction className="h-16 w-16">
+                <SpeedDialAction className="h-16 w-16 shadow-2xl">
                   {createElement(option.icon, {
                     className: "h-5 w-5 text-blue-gray-700",
                   })}
@@ -66,7 +66,7 @@ export default function MarcacionRapida({ info }: Props) {
               </SpeedDialAction>
             </Link> */}
             <div className="" onClick={logout}>
-              <SpeedDialAction className="h-16 w-16">
+              <SpeedDialAction className="h-16 w-16 shadow-2xl">
                 <HiPower className="h-5 w-5 text-red-600" />
                 <Typography
                   color="blue-gray"

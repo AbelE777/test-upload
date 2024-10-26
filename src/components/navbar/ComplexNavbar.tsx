@@ -195,9 +195,9 @@ function ComplexNavbar() {
             JAR
           </Typography>
         </Link>
-        <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+        {/* <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
-        </div>
+        </div> */}
         <IconButton
           size="sm"
           color="blue-gray"

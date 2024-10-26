@@ -7,9 +7,12 @@ import { createCommonUser } from "../../api";
 import { toast } from 'sonner';
 import { useVerifyRol } from "../../hooks";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NewUser = () => {
   const verifyRolAndRedirect = useVerifyRol();
+  const navigate = useNavigate();
+
   useEffect(() => {
     verifyRolAndRedirect(); // Verifica el rol y realiza la redirección si es necesario
   }, []);
@@ -24,7 +27,10 @@ const NewUser = () => {
     createCommonUser(data)
       .then((response) => {   
         console.log(response)     
-        if(response.status === 201)toast.success("Usuario Añadido con éxito!")
+        if(response.status === 201) {
+          navigate("/users");
+          toast.success("Usuario Añadido con éxito!")
+        }
       })
       .catch((error) => {
         // La Promesa fue rechazada debido a un error

@@ -10,6 +10,7 @@ import {
   HiPhoto
 } from "react-icons/hi2";
 import {FaHandHoldingDollar} from "react-icons/fa6"
+import { BsFolder2Open } from "react-icons/bs";
 import { IAccordionOptions, ISidebarItem } from "../../types";
 
 export const mainMenuOptionsArr: IAccordionOptions[] = [
@@ -102,41 +103,41 @@ const simpleoptions = [
   },
 ];
 const doctorsimpleoptions = [  
+  // {
+  //   id: "home",
+  //   icon: HiOutlineHome,
+  //   text: "Home",
+  //   sufixValue: null,
+  //   to: "/",
+  // },
+  // {
+  //   id: "profile",
+  //   icon: HiUserCircle,
+  //   text: "Mi Perfil",
+  //   sufixValue: null,
+  //   to: "profile",
+  // },
+  // {
+  //   id: "settings",
+  //   icon: HiMiniCog,
+  //   text: "Configuración",
+  //   sufixValue: null,
+  //   to: "settings",
+  // },
+  // {
+  //   id: "gallery",
+  //   icon: HiPhoto,
+  //   iconImg: "src/assets/img/4100761.png",
+  //   text: "RX Pcte",
+  //   sufixValue: null,
+  //   to: "rx",
+  // },
   {
-    id: "home",
-    icon: HiOutlineHome,
-    text: "Home",
+    id: "files",
+    icon: BsFolder2Open,
+    text: "Archivos",
     sufixValue: null,
-    to: "/",
-  },
-  {
-    id: "profile",
-    icon: HiUserCircle,
-    text: "Mi Perfil",
-    sufixValue: null,
-    to: "profile",
-  },
-  {
-    id: "settings",
-    icon: HiMiniCog,
-    text: "Configuración",
-    sufixValue: null,
-    to: "settings",
-  },
-  {
-    id: "gallery",
-    icon: HiPhoto,
-    iconImg: "src/assets/img/4100761.png",
-    text: "RX Pcte",
-    sufixValue: null,
-    to: "rx",
-  },
-  {
-    id: "remisiones",
-    icon: FaHandHoldingDollar,
-    text: "Remisiones",
-    sufixValue: null,
-    to: "remisiones",
+    to: "files",
   },
   {
     id: "logout",

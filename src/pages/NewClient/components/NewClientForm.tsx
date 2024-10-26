@@ -94,9 +94,9 @@ const NewClientForm = ({ onSubmit }: Props) => {
               },
               required: "Este campo es obligatorio",
               validate: (value: string) => {
-                if (!validadorCedula(value)) {
-                  return "Número de cédula inválido";
-                }
+                // if (!validadorCedula(value)) {
+                //   return "Número de cédula inválido";
+                // }
               },
             }}
           />
