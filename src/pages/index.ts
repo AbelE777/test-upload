@@ -15,6 +15,8 @@ import Remisiones from './Remisiones/Remisiones';
 import EditClient from './EditClient/EditClient';
 import {Rx} from './RX';
 import { FilesPage } from "./FilesPage";
+import { SharedFilesPage } from "./SharedFilesPage";
+
 
 
 export {
@@ -34,5 +36,6 @@ export {
   Remisiones,
   EditClient,
   Rx,
-  FilesPage
+  FilesPage,
+  SharedFilesPage
 }

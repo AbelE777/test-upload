@@ -13,3 +13,4 @@ export * from './IUsersData';
 export * from './FlatData';
 export * from './IEditClientFormFields';
 export * from './IEditProfileFormFields';
+export * from './files';

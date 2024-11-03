@@ -18,7 +18,7 @@ export type FilesInterface = {
   id: string;
   nombre: string;
   files: FileWithPreview[];
-}
+};
 
 export interface ContentStep4Type {
   activeStep: number;
@@ -28,12 +28,12 @@ export interface ContentStep4Type {
     label: string;
     value: string | undefined;
     icon: IconType;
-}[],
-dataPaciente: {
-  label: string;
-  value: string | undefined;
-  icon: IconType;
-}[],
+  }[];
+  dataPaciente: {
+    label: string;
+    value: string | undefined;
+    icon: IconType;
+  }[];
 }
 export interface PacienteType {
   nombre: string;

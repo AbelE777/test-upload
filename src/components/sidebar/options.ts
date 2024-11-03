@@ -7,11 +7,9 @@ import {
   HiMiniCog,
   HiPower,
   HiOutlineUserGroup,
-  HiPhoto
 } from "react-icons/hi2";
-import {FaHandHoldingDollar} from "react-icons/fa6"
-import { BsFolder2Open } from "react-icons/bs";
 import { IAccordionOptions, ISidebarItem } from "../../types";
+import { HiOutlineFolderPlus, HiOutlineFolderOpen } from "react-icons/hi2";
 
 export const mainMenuOptionsArr: IAccordionOptions[] = [
   {
@@ -133,8 +131,15 @@ const doctorsimpleoptions = [
   //   to: "rx",
   // },
   {
+    id: "shared-files",
+    icon: HiOutlineFolderOpen,
+    text: "Compartidos",
+    sufixValue: null,
+    to: "/shared-files",
+  },
+  {
     id: "files",
-    icon: BsFolder2Open,
+    icon: HiOutlineFolderPlus,
     text: "Archivos",
     sufixValue: null,
     to: "/files",

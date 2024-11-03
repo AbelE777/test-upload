@@ -70,6 +70,118 @@ export const createUserCliente = async (
   }
 };
 
+// UPLOAD FILE
+export const uploadFile = async (
+  data: FormData,
+  filesGroupName: string
+): Promise<any> => {
+  const access_token = localStorage.getItem("access_token");
+  if (!accessTokenUserExists())
+    return Promise.reject("No hay un token de acceso");
+  try {
+    const response = await instance.post("files/upload-file", data, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("error uploadFile", error);
+    return Promise.reject(error);
+  }
+};
+
+// GET GROUP FILES
+export const getGroupFiles = async () => {
+  const access_token = localStorage.getItem("access_token");
+  if (!accessTokenUserExists())
+    return Promise.reject("No hay un token de acceso");
+
+  try {
+    const response = await instance.get("files/groups", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("error getGroupFiles", error);
+    return Promise.reject(error);
+  }
+};
+
+export const downloadFile = async (fileId: number, fileName: string) => {
+  const access_token = localStorage.getItem("access_token");
+  if (!accessTokenUserExists())
+    return Promise.reject("No hay un token de acceso");
+  try {
+    const response = await instance.get(`files/download/${fileId}`, {
+      responseType: "blob", // recibir el archivo como blob
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    // Crear un enlace para descargar el blob
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", fileName); // Nombre del archivo
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error("Error al descargar el archivo:", error);
+    throw Promise.reject(error);
+  }
+};
+
+export const getFileUrl = async (fileId: number) => {
+  const access_token = localStorage.getItem("access_token");
+  if (!accessTokenUserExists())
+    return Promise.reject("No hay un token de acceso");
+
+  try {
+    return await instance.get(`files/view/${fileId}`, {
+      responseType: "arraybuffer",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+  } catch (error) {
+    throw Promise.reject(error);
+  }
+};
+
+export const downloadAllFiles = async (groupId: number, title:string) => {
+  const access_token = localStorage.getItem("access_token");
+  if (!access_token) {
+    console.log("No hay un token de acceso");
+    return;
+  }
+
+  try {
+    const response = await instance.get(`files/download-all/${groupId}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      responseType: 'blob'
+    });
+
+    const fileUrl = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.setAttribute('download', `grupo-${groupId}-${title.replace(/\s+/g, '-')}.zip`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    throw Promise.reject(error);
+  }
+};
+
+
 // CREAR USUARIO ADMIN O EMPLEADO
 export const createCommonUser = async (
   data: IUserRegistrationFormValues

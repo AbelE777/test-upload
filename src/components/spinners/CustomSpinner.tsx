@@ -2,7 +2,11 @@ import { infinity } from "ldrs";
 
 infinity.register();
 
-const CustomSpinner = () => {
+interface Props {
+  loadingMessage?: string
+}
+
+const CustomSpinner = ({loadingMessage}: Props) => {
   return (
     <div
       className="fixed inset-0 bg-black flex items-center z-50 h-screen"
@@ -22,6 +26,7 @@ const CustomSpinner = () => {
           speed="0.6"
           color="white"
         ></l-infinity>
+        {loadingMessage && <p className="text-white">{loadingMessage}</p>}
       </div>
     </div>
   );

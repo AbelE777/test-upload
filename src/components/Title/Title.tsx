@@ -24,7 +24,7 @@ const Title = ({ size, color, children, position }: Props) => {
 
   return (
     <h1
-      className={`mx-5 md:mx-20 md:justify-normal justify-center dark:text-gray-100 mt-4 flex font-bold ${fontPosition} ${fontSizeClasses} ${colorClasses}`}
+      className={`justify-center dark:text-gray-100 mt-4 flex font-bold ${fontPosition} ${fontSizeClasses} ${colorClasses}`}
     >
       {children}
     </h1>

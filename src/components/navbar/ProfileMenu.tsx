@@ -11,8 +11,8 @@ import { createElement, useState } from "react";
 import {
   HiUserCircle,
   HiChevronDown,
-  HiOutlineCog6Tooth,
-  HiOutlineInboxArrowDown,
+  HiOutlineFolderPlus,
+  HiOutlineFolderOpen,
   HiOutlineLifebuoy,
   HiPower,
 } from "react-icons/hi2";
@@ -24,8 +24,13 @@ import { useLogout } from "../../hooks";
 
 const profileMenuItems = [
   {
+    label: "Compartidos",
+    icon: HiOutlineFolderOpen,
+    to: '/shared-files'
+  },
+  {
     label: "Archivos",
-    icon: BsFolder2Open,
+    icon: HiOutlineFolderPlus,
     to: '/files'
   },
   {

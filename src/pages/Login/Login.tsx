@@ -90,7 +90,7 @@ const Login = () => {
             <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
               <div className="md:w-8/12 lg:w-5/12 mx-auto px-0 lg:px-5 lg:py-10">
                 <h2 className="text-gray-600 dark:text-gray-300 px-10 lg:px-10 2lg:px-0 pt-10 text-center text-2xl font-bold dark:text-slate-100 mb-6">
-                  Accede a tu cuenta para continuar.
+                  Accede a tu cuenta para continuar
                 </h2>
                 <LoginForm onSubmit={onSubmit} />
               </div>

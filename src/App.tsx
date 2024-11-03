@@ -18,7 +18,8 @@ import {
   Remisiones,
   EditClient,
   Rx,
-  FilesPage
+  FilesPage,
+  SharedFilesPage
 } from "./pages";
 import { RequireAuth } from "./components";
 
@@ -50,6 +51,7 @@ function App() {
           {/* <Route path="/rx" element={<Rx />} /> */}
           {/* <Route path="/remisiones" element={<Remisiones />} /> */}
           <Route path="/files" element={<FilesPage />} />
+          <Route path="/shared-files" element={<SharedFilesPage />} />
         </Route>
 
         {/* catch all */}

@@ -8,10 +8,10 @@ import {
 } from "../.";
 import { useEffect, useRef, useState } from "react";
 import {
-  HiOutlineUserGroup,
   HiOutlineClipboardDocumentList,
+  HiOutlineFolderPlus,
+  HiOutlineFolderOpen,
 } from "react-icons/hi2";
-import { BsFolder2Open } from "react-icons/bs";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { useRecoilValue } from "recoil";
 import { currentUserSelector } from "../../recoil/selectors";
@@ -54,8 +54,13 @@ const AuthorizedLayout = () => {
 
   const adminOtions = [
     {
+      text: "Compartidos",
+      icon: HiOutlineFolderOpen,
+      to: "/shared-files",
+    },
+    {
       text: "Archivos",
-      icon: BsFolder2Open,
+      icon: HiOutlineFolderPlus,
       to: "/files",
     },
   ];

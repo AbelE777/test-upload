@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { HiXMark, HiOutlineArrowUpTray } from "react-icons/hi2";
-import { CustomImage } from "..";
+import { CustomImage, PdfViewerButton } from "..";
 import { motion } from "framer-motion";
+
 
 interface FileWithPreview extends File {
   preview: string;
@@ -45,7 +46,8 @@ const MyDropZone = ({
         const transformedFiles = acceptedFiles.map((file) =>
           Object.assign(file, { preview: URL.createObjectURL(file) })
         );
-        if (addFilesToSelectedServices) addFilesToSelectedServices(serviceId, transformedFiles);
+        if (addFilesToSelectedServices)
+          addFilesToSelectedServices(serviceId, transformedFiles);
       }
       if (rejectedFiles?.length) {
         setRejected((previusFiles) => [...previusFiles, ...rejectedFiles]);
@@ -57,14 +59,15 @@ const MyDropZone = ({
     onDrop,
     accept: {
       "image/*": [".png", ".jpg", ".jpeg"],
-      'application/pdf': ['.pdf']
+      "application/pdf": [".pdf"],
     },
     maxSize: 1024 * 1000, // acepta maximo 1mb
   });
 
   const removeFile = (file_: File) => {
     setLocalFiles((files) => files.filter((file) => file.name !== file_.name));
-    if (removeFileFromSelectedServices) removeFileFromSelectedServices(serviceId, file_);
+    if (removeFileFromSelectedServices)
+      removeFileFromSelectedServices(serviceId, file_);
   };
 
   const removeRejected = (name: string) => {
@@ -85,7 +88,9 @@ const MyDropZone = ({
         <input {...getInputProps()} />
         {isDragActive ? (
           <>
-            <p className="text-lg mb-4 dark:text-gray-100">Suelta tus archivos aquí ...</p>
+            <p className="text-lg mb-4 dark:text-gray-100">
+              Suelta tus archivos aquí ...
+            </p>
             <HiOutlineArrowUpTray size={25} className="text-blue-500 mx-auto" />
           </>
         ) : (
@@ -94,11 +99,13 @@ const MyDropZone = ({
             transition={{ duration: 0.3 }}
             className="cursor-pointer"
           >
-            <p className="uppercase dark:text-gray-100">{serviceName}</p>
+            <p className="uppercase dark:text-gray-100 text-lg">
+              {serviceName}
+            </p>
             <p className="text-lg mb-4 dark:text-gray-100">
               Arrastra y suelta tus archivos aquí, o click para seleccionar
             </p>
-            <HiOutlineArrowUpTray size={25} className="text-blue-500 mx-auto" />
+            <HiOutlineArrowUpTray size={35} className="text-blue-500 mx-auto" />
           </motion.div>
         )}
       </div>
@@ -108,10 +115,17 @@ const MyDropZone = ({
         <h3 className="title text-lg font-normal text-neutral-600 mt-10 dark:text-gray-100">
           Archivos aceptados ({localFiles.length})
         </h3>
-        <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-10">
-          {localFiles.map((file) => (
-            <li key={file.name} className="relative h-32 rounded-md shadow-lg">
-              <CustomImage file={file} />
+        <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-10">
+          {localFiles.map((file, idx) => (
+            <li key={idx} className="relative h-32 rounded-md shadow-lg">
+              {file.type.startsWith("image/") ? (
+                // Vista previa de la imagen
+                <CustomImage file={file} />
+              ) : file.type === "application/pdf" ? (
+                // vista previa si es PDF
+                <PdfViewerButton iconSize={50} text="Ver PDF" file={file} />
+              ) : null}
+
               <button
                 type="button"
                 className="w-7 h-7 border border-secondary-400 bg-red-400 rounded-full flex justify-center items-center absolute -top-3 md:-right-3 hover:bg-gray-400 transition-colors"
@@ -119,7 +133,7 @@ const MyDropZone = ({
               >
                 <HiXMark className="w-5 h-5 fill-white hover:fill-secondary-400 transition-colors" />
               </button>
-              <p className="mt-2 text-neutral-500 text-[12px] font-medium">
+              <p className="mt-2 text-neutral-500 text-[12px] font-medium dark:text-white">
                 {file.name}
               </p>
             </li>
@@ -131,8 +145,8 @@ const MyDropZone = ({
           Archivos rechazados ({rejected.length})
         </h3>
         <ul className="mt-6 flex flex-col">
-          {rejected.map(({ file, errors }) => (
-            <li key={file.name} className="flex items-start justify-between">
+          {rejected.map(({ file, errors }, idx) => (
+            <li key={idx} className="flex items-start justify-between">
               <div>
                 <p className="mt-2 text-neutral-500 text-sm font-medium">
                   {file.name}

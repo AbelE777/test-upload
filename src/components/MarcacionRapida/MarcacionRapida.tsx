@@ -31,7 +31,7 @@ export default function MarcacionRapida({ info }: Props) {
       <div className="fixed bottom-5 right-5">
         <SpeedDial>
           <SpeedDialHandler>
-            <IconButton size="lg" className="rounded-full dark:bg-blue-900">
+            <IconButton size="lg" className="rounded-full dark:bg-blue-800 bg-blue-800">
               <HiPlus className="h-5 w-5 transition-transform group-hover:rotate-45" />
             </IconButton>
           </SpeedDialHandler>
