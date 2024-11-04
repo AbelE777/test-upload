@@ -9,20 +9,23 @@ import {
 } from "@material-tailwind/react";
 import { createElement, useState } from "react";
 import {
-  HiUserCircle,
+  HiOutlineUser,
   HiChevronDown,
   HiOutlineFolderPlus,
   HiOutlineFolderOpen,
-  HiOutlineLifebuoy,
   HiPower,
 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-import { BsFolder2Open } from "react-icons/bs";
 import { currentUserSelector } from "../../recoil/selectors";
 import { useRecoilValue } from "recoil";
 import { useLogout } from "../../hooks";
 
 const profileMenuItems = [
+  {
+    label: "Mi perfil",
+    icon: HiOutlineUser,
+    to: '/shared-files'
+  },
   {
     label: "Compartidos",
     icon: HiOutlineFolderOpen,

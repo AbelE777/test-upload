@@ -44,7 +44,7 @@ function App() {
           {/* <Route path="/clients/:id" element={<EditClient/>} /> */}
           {/* <Route path="/new_client" element={<NewClient />} /> */}
           {/* <Route path="/settings" element={<Settings />} /> */}
-          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/profile" element={<Profile />} />
           {/* <Route path="/users" element={<Users />} /> */}
           {/* <Route path="/new_user" element={<NewUser />} /> */}
           {/* <Route path="/facturacion" element={<Facturacion />} /> */}

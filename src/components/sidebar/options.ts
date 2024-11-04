@@ -10,6 +10,7 @@ import {
 } from "react-icons/hi2";
 import { IAccordionOptions, ISidebarItem } from "../../types";
 import { HiOutlineFolderPlus, HiOutlineFolderOpen } from "react-icons/hi2";
+import { GoPerson } from "react-icons/go";
 
 export const mainMenuOptionsArr: IAccordionOptions[] = [
   {
@@ -130,6 +131,13 @@ const doctorsimpleoptions = [
   //   sufixValue: null,
   //   to: "rx",
   // },
+  {
+    id: "profile",
+    icon: GoPerson,
+    text: "Mi perfil",
+    sufixValue: null,
+    to: "/profile",
+  },
   {
     id: "shared-files",
     icon: HiOutlineFolderOpen,
