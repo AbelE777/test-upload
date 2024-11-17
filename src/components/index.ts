@@ -29,7 +29,6 @@ import MarcacionRapida from "./MarcacionRapida/MarcacionRapida";
 import AnimatedButton from "./AnimatedButon";
 import ConfirmModal from './ConfirmModal/ConfirmModal/index';
 import PdfViewerButton from "./PdfViewerButton/PdfViewerButton";
-import ModalPdf from "./ModalPdf/ModalPdf";
 
 
 
@@ -65,6 +64,5 @@ export {
   AnimatedButton,
   ConfirmModal,
   PdfViewerButton,
-  ModalPdf
 }
 // export { default as SplashScreen } from "./splash/Splash";

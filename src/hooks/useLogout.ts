@@ -9,7 +9,7 @@ function useLogout() {
   const logout = () => {
     // Realiza cualquier limpieza necesaria
     // Por ejemplo, limpiar datos de usuario y token de acceso
-    setUser({ user: null, access_token: null });
+    setUser({ user: null, access_token: null, isAdmin: false });
     setIsAuthenticated(false);
 
     // Elimina datos del almacenamiento local

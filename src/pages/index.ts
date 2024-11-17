@@ -16,6 +16,7 @@ import EditClient from './EditClient/EditClient';
 import {Rx} from './RX';
 import { FilesPage } from "./FilesPage";
 import { SharedFilesPage } from "./SharedFilesPage";
+import { DeletedFilesPage } from "./DeletedFilesPage";
 
 
 
@@ -37,5 +38,6 @@ export {
   EditClient,
   Rx,
   FilesPage,
-  SharedFilesPage
+  SharedFilesPage,
+  DeletedFilesPage
 }

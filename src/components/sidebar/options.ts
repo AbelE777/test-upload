@@ -10,6 +10,7 @@ import {
 } from "react-icons/hi2";
 import { IAccordionOptions, ISidebarItem } from "../../types";
 import { HiOutlineFolderPlus, HiOutlineFolderOpen } from "react-icons/hi2";
+import { AiOutlineDelete } from "react-icons/ai";
 import { GoPerson } from "react-icons/go";
 
 export const mainMenuOptionsArr: IAccordionOptions[] = [
@@ -101,43 +102,8 @@ const simpleoptions = [
     to: null,
   },
 ];
-const doctorsimpleoptions = [  
-  // {
-  //   id: "home",
-  //   icon: HiOutlineHome,
-  //   text: "Home",
-  //   sufixValue: null,
-  //   to: "/",
-  // },
-  // {
-  //   id: "profile",
-  //   icon: HiUserCircle,
-  //   text: "Mi Perfil",
-  //   sufixValue: null,
-  //   to: "profile",
-  // },
-  // {
-  //   id: "settings",
-  //   icon: HiMiniCog,
-  //   text: "Configuración",
-  //   sufixValue: null,
-  //   to: "settings",
-  // },
-  // {
-  //   id: "gallery",
-  //   icon: HiPhoto,
-  //   iconImg: "src/assets/img/4100761.png",
-  //   text: "RX Pcte",
-  //   sufixValue: null,
-  //   to: "rx",
-  // },
-  {
-    id: "profile",
-    icon: GoPerson,
-    text: "Mi perfil",
-    sufixValue: null,
-    to: "/profile",
-  },
+
+let commonOptions = [
   {
     id: "shared-files",
     icon: HiOutlineFolderOpen,
@@ -159,7 +125,36 @@ const doctorsimpleoptions = [
     sufixValue: null,
     to: null,
   },
+]
+const userOptions = [
+  {
+    id: "profile",
+    icon: GoPerson,
+    text: "Mi perfil",
+    sufixValue: null,
+    to: "/profile",
+  },
+  ...commonOptions
 ];
 
+const adminOptions = [
+  {
+    id: "profile",
+    icon: GoPerson,
+    text: "Mi perfil",
+    sufixValue: null,
+    to: "/profile",
+  },
+  {
+    id: 'deleted',
+    icon: AiOutlineDelete,
+    text: 'Eliminados',
+    sufixValue: null,
+    to: '/deleted-files'
+  },
+  ...commonOptions
+]
+
 export const menuOptionsArr: ISidebarItem[] = simpleoptions;
-export const doctorMenuOptionsArr: ISidebarItem[] = doctorsimpleoptions;
+export const doctorMenuOptionsArr: ISidebarItem[] = userOptions;
+export const adminMenuOptionsArr: ISidebarItem[] = adminOptions;

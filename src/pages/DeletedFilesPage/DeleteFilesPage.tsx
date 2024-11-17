@@ -8,6 +8,8 @@ import {
 } from "@material-tailwind/react";
 import emptyData from "../../assets/svg/undraw_no_data_re_kwbl.svg";
 import { IoCalendarClearOutline } from "react-icons/io5";
+import { MdOutlineRestore } from "react-icons/md";
+
 
 import { CustomSpinner, Title } from "../../components";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -15,7 +17,7 @@ import { deleteOrRestoreFileGroup, getGroupFiles, validateToken } from "../../ap
 import { motion } from "framer-motion";
 import { FileInterface, GroupFilesInterface } from "../../types";
 import classNames from "classnames";
-import { inputClasses, inputLabelClasses } from "../Login/inputClases";
+import { inputClasses } from "../Login/inputClases";
 import ModalPdfSharedFiles from "./components/ModalPdfSharedFiles/ModalPdfSharedFiles";
 import { getDateShortFormat } from "../../utils";
 import ViewToggleButton from "./components/ViewToggleButton/ViewToggleButton";
@@ -56,6 +58,11 @@ function SharedFilesPage() {
   };
 
   useEffect(() => {
+    if(!isAdmin) navigate("/shared-files");
+  }, [])
+  
+
+  useEffect(() => {
     const verifySession = async () => {
       const isValidToken = await validateToken();
       if (!isValidToken) {
@@ -69,7 +76,7 @@ function SharedFilesPage() {
 
   const getGroups = async () => {
     try {
-      const response = await getGroupFiles();
+      const response = await getGroupFiles(0);
       setGroups(response.data);
       setFilteredGroups(response.data);
 
@@ -98,9 +105,10 @@ function SharedFilesPage() {
 
   const handleActionDelete = (action: boolean) => {
     if (action && groupeSelected) {
-      deleteOrRestoreFileGroup(groupeSelected?.id, 0).then(res => {
+      // si pasamos 1, estaremo reactivando / restaurando el grupo
+      deleteOrRestoreFileGroup(groupeSelected?.id, 1).then(() => {
         getGroups()
-      }).catch(err => {
+      }).catch((err: any) => {
         console.log(err)
       })
     }
@@ -184,7 +192,7 @@ function SharedFilesPage() {
         <CustomSpinner loadingMessage={`Trayendo tus archivos...`} />
       )}
       <Title size="large" color="gray-800" position="left">
-        COMPARTIDOS
+        ELIMINADOS
       </Title>
 
       <motion.div
@@ -195,7 +203,7 @@ function SharedFilesPage() {
       >
         <div className="m-5 max-w-[45rem] mx-auto">
           <span className="dark:text-gray-200 text-gray-800 text-xl font-semibold block text-center">
-            Aquí puedes ver los grupos de archivos compartidos
+            Aquí puedes ver los grupos eliminados
           </span>
         </div>
         {/* INPUT FILTER */}
@@ -221,11 +229,11 @@ function SharedFilesPage() {
               Tienes{" "}
               {isDetailsViewEnabled ? (
                 <>
-                  <strong>{detailedGroups.length}</strong> imagenes compartidas
+                  <strong>{detailedGroups.length}</strong> imagenes eliminadas
                 </>
               ) : (
                 <>
-                  <strong>{groups.length}</strong> grupos compartidos
+                  <strong>{groups.length}</strong> grupos eliminado
                 </>
               )}
             </p>
@@ -291,10 +299,11 @@ function SharedFilesPage() {
                             <Button
                               size="sm"
                               variant="outlined"
-                              className="text-white border-none bg-red-400 font-normal"
+                              className="text-white border-none bg-blue-400 font-lg flex items-center gap-1"
                               onClick={() => showModalDelete(group)}
                             >
-                              Eliminar grupo
+                              RESTAURAR GRUPO
+                              <MdOutlineRestore size={19}/>
                             </Button>
                           )}
                         </div>
@@ -346,7 +355,7 @@ function SharedFilesPage() {
             <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 mx-auto">
               <img src={emptyData} className="w-full" alt="no data available" />
               <p className="font-semibold text-lg pt-3 dark:text-gray-100 text-gray-800">
-                No hay nada publicado aún
+                No hay nada eliminado aún
               </p>
             </div>
           </div>

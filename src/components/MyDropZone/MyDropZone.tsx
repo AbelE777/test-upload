@@ -83,16 +83,19 @@ const MyDropZone = ({
   }, [files]);
 
   return (
-    <div className="">
+    <div className="max-w-[45rem] lg:w-[45rem] mx-auto">
       <div {...getRootProps({ className })}>
         <input {...getInputProps()} />
         {isDragActive ? (
-          <>
+          <div>
             <p className="text-lg mb-4 dark:text-gray-100">
-              Suelta tus archivos aquí ...
+              Suelta tus archivos
+            </p>
+            <p className="text-lg mb-4 dark:text-gray-100">
+            aquí ...
             </p>
             <HiOutlineArrowUpTray size={25} className="text-blue-500 mx-auto" />
-          </>
+          </div>
         ) : (
           <motion.div
             whileHover={{ x: [0, -5, 5, -5, 0] }}

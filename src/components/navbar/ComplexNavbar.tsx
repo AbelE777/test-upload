@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Navbar,
-  Collapse,
   Typography,
   Menu,
   MenuHandler,
@@ -189,7 +188,7 @@ function ComplexNavbar() {
   return (
     <Navbar className="bg-white dark:bg-gray-900 border-none sticky top-0 z-50 mx-auto max-w-none p-2 rounded-none lg:pl-6">
       <div className={`relative mx-auto flex items-center ${fontDarkLight}`}>
-        <Link to="/" className="flex items-center">
+        <Link to="/files" className="flex items-center">
           <img src={logo} alt="" width={28} />
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
             JAR

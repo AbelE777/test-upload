@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export function getFormattedDate(dateString: string) {
+export function getFormattedLongDate(dateString: string) {
   const date = moment(dateString);
 
   // Mapeo de días de la semana y meses en español

@@ -6,7 +6,7 @@ export interface GroupFilesInterface {
   user_id: UsuarioFileInterface
 }
 
-interface FileInterface {
+export interface FileInterface {
   id_file: number,
   file_name: string,
   original_file_name: string,

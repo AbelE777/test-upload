@@ -47,10 +47,11 @@ const EditProfile = () => {
     updateProfileData(personid, data)
       .then((response) => {
         const personData = response.data;
+        const isAdmin = JSON.parse(localStorage.getItem("is_admin")!) || false;
         const user = JSON.parse(localStorage.getItem("user_data")!) || null;
         user.fk_persona = personData;
         const access_token = localStorage.getItem("access_token")! || null;
-        setUser({ user, access_token });
+        setUser({ user, access_token, isAdmin });
         toast.success("Actualización exitosa!");
         navigate("/profile");
       })
@@ -88,8 +89,9 @@ const EditProfile = () => {
             const newImgUrl = response.data.profile_img;
             const user = JSON.parse(localStorage.getItem("user_data")!) || null;
             const access_token = localStorage.getItem("access_token")! || null;
+            const isAdmin = localStorage.getItem("is_admin")! || false;
             user.profile_img = newImgUrl;
-            setUser({ user, access_token });
+            setUser({ user, access_token, isAdmin });
             toast.success("Actualización exitosa!");
             navigate("/profile");
           })
@@ -200,7 +202,7 @@ const EditProfile = () => {
                 variant="gradient"
                 color="blue"
               >
-                ACTUALIZAR
+                CONFIRMAR CAMBIOS
                 <HiArrowPath size={20} />
               </Button>
             </motion.div>

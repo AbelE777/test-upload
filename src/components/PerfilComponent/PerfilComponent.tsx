@@ -4,9 +4,14 @@ import { useRecoilValue } from "recoil";
 import { Button } from "@material-tailwind/react";
 import { HiOutlinePencil } from "react-icons/hi2";
 import { motion } from "framer-motion";
+import ReadonlyInput from "./ReadonlyInput";
 
 const PerfilComponent = () => {
   const { user } = useRecoilValue(currentUserSelector);
+  const nombresSucursales = user.usuarioSucursales.map(
+    (item: any) => item.sucursal.nombreSucursal
+  );
+
   const perfil =
     user.rol === 1 ? "Administrador" : user.rol === 2 ? "Empleado" : "Cliente";
   return (
@@ -53,8 +58,8 @@ const PerfilComponent = () => {
         <div className="w-full md:w-3/5 p-8 bg-white  dark:bg-gray-900 lg:ml-4 shadow-md rounded-xl">
           <div className="rounded  shadow p-6 dark:text-gray-200">
             <div className="pb-4 flex flex-col sm:flex-row gap-2">
-              <div className="relative w-full sm:w-1/2">
-                <label
+              <div className="relative w-full sm:w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
                   htmlFor="name"
                   className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
                 >
@@ -66,10 +71,15 @@ const PerfilComponent = () => {
                   className="border-1  rounded-lg px-4 py-2 w-full"
                   type="text"
                   value={`${user.fk_persona.nombres} ${user.fk_persona.apellidos}`}
+                /> */}
+                <ReadonlyInput
+                  id="username"
+                  label="Nombres"
+                  value={`${user.fk_persona.nombres} ${user.fk_persona.apellidos}`}
                 />
               </div>
-              <div className="relative w-full sm:w-1/2">
-                <label
+              <div className="relative w-full sm:w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
                   htmlFor="cedula"
                   className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
                 >
@@ -81,12 +91,17 @@ const PerfilComponent = () => {
                   className="border-1  rounded-lg px-4 py-2 w-full"
                   type="text"
                   value={`${user.fk_persona.cedula}`}
+                /> */}
+                <ReadonlyInput
+                  id="cedula"
+                  label="Cédula"
+                  value={`${user.fk_persona.cedula}`}
                 />
               </div>
             </div>
             <div className="pb-4 flex flex-col sm:flex-row gap-2">
-              <div className="relative w-full sm:w-1/2">
-                <label
+              <div className="relative w-full sm:w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
                   htmlFor="about"
                   className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
                 >
@@ -98,10 +113,14 @@ const PerfilComponent = () => {
                   className="border-1  rounded-lg px-4 py-2 w-full"
                   type="email"
                   value={`${user.fk_persona.email}`}
+                /> */}
+                <ReadonlyInput
+                  label="Email"
+                  value={`${user.fk_persona.email}`}
                 />
               </div>
-              <div className="relative w-full sm:w-1/2">
-                <label
+              <div className="relative w-full sm:w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
                   htmlFor="about"
                   className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
                 >
@@ -113,12 +132,16 @@ const PerfilComponent = () => {
                   className="border-1  rounded-lg px-4 py-2 w-full"
                   type="telefono"
                   value={`${user.fk_persona.telefono}`}
+                /> */}
+                <ReadonlyInput
+                  label="Teléfono"
+                  value={`${user.fk_persona.telefono}`}
                 />
               </div>
             </div>
             <div className="pb-4 flex flex-col sm:flex-row gap-2">
-              <div className="relative w-full sm:w-1/2">
-                <label
+              <div className="relative w-full sm:w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
                   htmlFor="about"
                   className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
                 >
@@ -130,10 +153,14 @@ const PerfilComponent = () => {
                   className="border-1  rounded-lg px-4 py-2 w-full"
                   type="text"
                   value={user.usuario}
+                /> */}
+                <ReadonlyInput
+                  label="Usuario"
+                  value={user.usuario}
                 />
               </div>
-              <div className="relative w-full sm:w-1/2">
-                <label
+              <div className="relative w-full sm:w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
                   htmlFor="about"
                   className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
                 >
@@ -145,12 +172,16 @@ const PerfilComponent = () => {
                   className="border-1  rounded-lg px-4 py-2 w-full"
                   type="text"
                   value={perfil}
+                /> */}
+                <ReadonlyInput
+                  label="Rol"
+                  value={perfil}
                 />
               </div>
             </div>
             <div className="pb-4 flex flex-col sm:flex-row gap-2">
-              <div className="relative w-full w-1/2">
-                <label
+              <div className="relative w-full w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
                   htmlFor="direccion"
                   className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
                 >
@@ -162,6 +193,31 @@ const PerfilComponent = () => {
                   className="border-1 text-center rounded-lg px-4 py-2 w-full"
                   type="text"
                   value={user.fk_persona.direccion}
+                /> */}
+                <ReadonlyInput
+                  label="Dirección"
+                  value={user.fk_persona.direccion}
+                />
+              </div>
+            </div>
+            <div className="pb-4 flex flex-col sm:flex-row gap-2">
+              <div className="relative w-full w-1/2 border border-gray-300 rounded-lg">
+                {/* <label
+                  htmlFor="sucursales"
+                  className="font-semibold text-gray-700 dark:text-gray-200 block pb-1"
+                >
+                  Sucursales
+                </label>
+                <input
+                  disabled
+                  id="sucursales"
+                  className="border-1 text-center rounded-lg px-4 py-2 w-full"
+                  type="text"
+                  value={nombresSucursales.join(", ")}
+                /> */}
+                <ReadonlyInput
+                  label="Sucursales"
+                  value={nombresSucursales.join(", ")}
                 />
               </div>
             </div>

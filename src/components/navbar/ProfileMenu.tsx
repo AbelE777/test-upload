@@ -24,7 +24,7 @@ const profileMenuItems = [
   {
     label: "Mi perfil",
     icon: HiOutlineUser,
-    to: '/shared-files'
+    to: '/profile'
   },
   {
     label: "Compartidos",
@@ -53,7 +53,7 @@ function ProfileMenu() {
   const handleButtonClick = (to:string) => {
     navigate(to);
   };
-  const {user} = useRecoilValue(currentUserSelector);
+  const {user, isAdmin} = useRecoilValue(currentUserSelector);
 
   const logout = useLogout()
 
@@ -69,7 +69,7 @@ function ProfileMenu() {
             variant="circular"
             size="sm"
             alt="tania andrew"
-            className="border border-gray-500 p-0.5"
+            className={`border-2 border-gray-500 p-0.5 ${isAdmin && 'border-blue-900 dark:border-cyan-700'}`}
             src={user.profile_img}
           />
           <HiChevronDown

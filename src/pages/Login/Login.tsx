@@ -16,7 +16,6 @@ import { AxiosError } from "axios";
 // import { ParticlesComponent } from "../../components";
 
 const Login = () => {
-
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -33,12 +32,14 @@ const Login = () => {
     try {
       const data = await signIn(credentials);
       const { user, access_token } = data;
+      const isAdmin = user?.rol === 1 ? true : false
       if (user && access_token) {
         localStorage.setItem("access_token", access_token);
         localStorage.setItem("user_data", JSON.stringify(user));
+        localStorage.setItem("is_admin", JSON.stringify(isAdmin));
         localStorage.setItem("is_authenticated", "true");
         // setAuth({ user: data });
-        setUser({ user, access_token });
+        setUser({ user, access_token, isAdmin });
         setIsAuthenticated(true);
         navigate(from, { replace: true });
         setIsLoading(false);
@@ -85,16 +86,18 @@ const Login = () => {
         transition={{ duration: 0.9 }}
         className="flex-grow px-4"
       >
-        <section className="">
+        <h1 className="my-5 text-2xl font-bold text-gray-700 dark:text-gray-300">
+          JAR - ARCHIVOS COMPARTIDOS
+        </h1>
+        <section className="flex justify-center">
           <div className="container h-full">
-            <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
+            <div className="flex flex-row-reverse md:flex-row g-6 h-full flex-wrap items-center justify-center lg:justify-between">
               <div className="md:w-8/12 lg:w-5/12 mx-auto px-0 lg:px-5 lg:py-10">
                 <h2 className="text-gray-600 dark:text-gray-300 px-10 lg:px-10 2lg:px-0 pt-10 text-center text-2xl font-bold dark:text-slate-100 mb-6">
                   Accede a tu cuenta para continuar
                 </h2>
                 <LoginForm onSubmit={onSubmit} />
               </div>
-
               <LoginIllustration />
             </div>
           </div>

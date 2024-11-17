@@ -72,8 +72,7 @@ export const createUserCliente = async (
 
 // UPLOAD FILE
 export const uploadFile = async (
-  data: FormData,
-  filesGroupName: string
+  data: FormData
 ): Promise<any> => {
   const access_token = localStorage.getItem("access_token");
   if (!accessTokenUserExists())
@@ -93,13 +92,13 @@ export const uploadFile = async (
 };
 
 // GET GROUP FILES
-export const getGroupFiles = async () => {
+export const getGroupFiles = async (active=1) => {
   const access_token = localStorage.getItem("access_token");
   if (!accessTokenUserExists())
     return Promise.reject("No hay un token de acceso");
 
   try {
-    const response = await instance.get("files/groups", {
+    const response = await instance.get(`files/groups?active=${active}`, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
@@ -133,6 +132,24 @@ export const downloadFile = async (fileId: number, fileName: string) => {
     link.remove();
   } catch (error) {
     console.error("Error al descargar el archivo:", error);
+    throw Promise.reject(error);
+  }
+};
+
+// por defecto eliminara, active = 0, pasara de estado 1 a 0 (inactivo)
+export const deleteOrRestoreFileGroup = async (groupId: number, active: number = 0) => {
+  const access_token = localStorage.getItem("access_token");
+  if (!accessTokenUserExists())
+    return Promise.reject("No hay un token de acceso");
+  try {
+    const response = await instance.delete(`files/delete/${groupId}?active=${active}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    console.log(response)
+  } catch (error) {
+    console.error("Error al eliminar el grupo:", error);
     throw Promise.reject(error);
   }
 };
