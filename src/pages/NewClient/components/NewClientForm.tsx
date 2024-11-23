@@ -5,7 +5,6 @@ import {  FormErrorMessage, SelectInput } from "../../../components";
 import classNames from "classnames";
 import { FiUserCheck } from "react-icons/fi";
 
-import { validadorCedula } from "../../../utils";
 import DatePicker from "../../../components/DatePicker/DatePicker";
 import GeneratedPassword from "./GeneratedPassword";
 import zonas from "../../../data/zonasCliente.json"
@@ -93,7 +92,7 @@ const NewClientForm = ({ onSubmit }: Props) => {
                 message: "Cédula debe contener máximo 10 caracteres",
               },
               required: "Este campo es obligatorio",
-              validate: (value: string) => {
+              validate: () => {
                 // if (!validadorCedula(value)) {
                 //   return "Número de cédula inválido";
                 // }

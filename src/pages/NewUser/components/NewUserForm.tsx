@@ -9,7 +9,6 @@ import {
 } from "../../../components";
 import classNames from "classnames";
 import { FiUserCheck } from "react-icons/fi";
-import { validadorCedula } from "../../../utils";
 
 type Props = {
   onSubmit: SubmitHandler<IUserRegistrationFormValues>;
@@ -97,7 +96,7 @@ const NewUserForm = ({ onSubmit }: Props) => {
                 message: "Cédula debe contener al menos 10 caracteres",
               },
               required: "Este campo es obligatorio",
-              validate: (value: string) => {
+              validate: () => {
                 // if (!validadorCedula(value)) {
                 //   return "Número de cédula inválido";
                 // }

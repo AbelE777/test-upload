@@ -34,7 +34,7 @@ function CardFileGroup({ file, showCreatedAt = false, highlightenText }: Props) 
   const handleDownloadFile = async (fileId: number, fileName: string) => {
     try {
       setDownloading([true, fileId]);
-      const response = await downloadFile(fileId, fileName);
+      await downloadFile(fileId, fileName);
       toast.success("Archivo descargado");
     } catch (error: any) {
       toast.error("Error: Archivo no encontrado en el servidor");

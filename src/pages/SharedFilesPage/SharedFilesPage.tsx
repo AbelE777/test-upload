@@ -15,7 +15,7 @@ import { deleteOrRestoreFileGroup, getGroupFiles, validateToken } from "../../ap
 import { motion } from "framer-motion";
 import { FileInterface, GroupFilesInterface } from "../../types";
 import classNames from "classnames";
-import { inputClasses, inputLabelClasses } from "../Login/inputClases";
+import { inputClasses } from "../Login/inputClases";
 import ModalPdfSharedFiles from "./components/ModalPdfSharedFiles/ModalPdfSharedFiles";
 import { getDateShortFormat } from "../../utils";
 import ViewToggleButton from "./components/ViewToggleButton/ViewToggleButton";
@@ -98,7 +98,7 @@ function SharedFilesPage() {
 
   const handleActionDelete = (action: boolean) => {
     if (action && groupeSelected) {
-      deleteOrRestoreFileGroup(groupeSelected?.id, 0).then(res => {
+      deleteOrRestoreFileGroup(groupeSelected?.id, 0).then(() => {
         getGroups()
       }).catch(err => {
         console.log(err)
@@ -324,7 +324,7 @@ function SharedFilesPage() {
             {filteredDetailedGroups.length > 0 ? (
               <section className="mx-auto max-w-[70rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredDetailedGroups
-                  .map((detailedFiles, id) => (
+                  .map((detailedFiles) => (
                     <CardFileGroup
                       showCreatedAt={true}
                       key={detailedFiles.file_name}

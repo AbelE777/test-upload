@@ -152,6 +152,7 @@ function FilesPage() {
       ? "Los archivos seran visibles a tus sucursales asignadas"
       : "";
     setPostDataMessage(message);
+    console.log(postDataMessage)
   }, []);
 
   useEffect(() => {}, []);

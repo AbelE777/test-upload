@@ -8,17 +8,15 @@ import {
 } from "../.";
 import { useEffect, useRef, useState } from "react";
 import {
-  HiOutlineClipboardDocumentList,
   HiOutlineFolderPlus,
   HiOutlineFolderOpen,
 } from "react-icons/hi2";
-import { FaHandHoldingDollar } from "react-icons/fa6";
-import { useRecoilValue } from "recoil";
-import { currentUserSelector } from "../../recoil/selectors";
+// import { useRecoilValue } from "recoil";
+// import { currentUserSelector } from "../../recoil/selectors";
 
 const AuthorizedLayout = () => {
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
-  const currentUser = useRecoilValue(currentUserSelector);
+  // const currentUser = useRecoilValue(currentUserSelector);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
 
@@ -64,18 +62,18 @@ const AuthorizedLayout = () => {
       to: "/files",
     },
   ];
-  const clientOtions = [
-    {
-      text: "RX Pct",
-      icon: HiOutlineClipboardDocumentList,
-      to: "rx",
-    },
-    {
-      text: "Remisión",
-      icon: FaHandHoldingDollar,
-      to: "remisiones",
-    },
-  ];
+  // const clientOtions = [
+  //   {
+  //     text: "RX Pct",
+  //     icon: HiOutlineClipboardDocumentList,
+  //     to: "rx",
+  //   },
+  //   {
+  //     text: "Remisión",
+  //     icon: FaHandHoldingDollar,
+  //     to: "remisiones",
+  //   },
+  // ];
 
   return (
     <main className="min-h-screen">

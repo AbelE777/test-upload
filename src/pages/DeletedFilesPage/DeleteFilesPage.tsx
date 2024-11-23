@@ -333,7 +333,7 @@ function SharedFilesPage() {
             {filteredDetailedGroups.length > 0 ? (
               <section className="mx-auto max-w-[70rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredDetailedGroups
-                  .map((detailedFiles, id) => (
+                  .map((detailedFiles) => (
                     <CardFileGroup
                       showCreatedAt={true}
                       key={detailedFiles.file_name}
